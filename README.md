@@ -5,7 +5,7 @@ Here are just some examples of how I implement a website in PHP using a MySQL db
 
 Note all sensitive data has been removed (such as database credentials). The layout directory has intentionally been left empty.
 
-Note that some of the code relies on assets and files that are not present in the repo. This is because the repo is not intended to fully recreate the live website. It is maintained separately and demonstrates how the PHP/SQL generates the live site. It also provides insight on how the admin panel works, since the live website cannot offer a demo account to preview the admin panel.
+Note that some of the code relies on assets and files that are not present in the repo. This is because the repo is not intended to fully recreate the live website. It is maintained separately and demonstrates how the PHP/SQL generates the live site. It also provides insight on how the admin panel works, since the live website does not offer a demo account to preview the admin panel.
 
 ### Bootstrap Grid Layout
 The website utilizes the grid layout CSS stylings provided in Twitter's Bootstrap.
