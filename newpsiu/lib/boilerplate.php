@@ -1,0 +1,97 @@
+<?PHP
+	# BOILERPLATE FILE CONTAINS FUNCTIONS THAT CREATE HEADERS/FOOTERS, ETC
+	# ALTERING HERE WILL ALTER ON ALL PAGES. BOILERPLATE HTML IS INTENDED
+	# TO BE CONSISTENT ACROSS THE WEBSITE
+	
+	include("sql_info.php");
+	session_start();
+		
+	// Write HTML Header Info
+	// NOTE THIS FUNCTION DOES NOT CLOSE HEADER TAG. It is imperative that displayTopNav be called at
+	// some point after displayHeader or else webpage will be malformed.
+	function displayHeader($title) {
+?>
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+    	<meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="keywords" content="Psi Upsilon Theta Theta Fraternity Frat University of Washington Chapter Greek UW Psi U PsiU">
+		<meta name="description" content="This is the official website of the Theta Theta chapter of Psi Upsilon at the University of Washington. Check out our calendar for events, and contact our rush team for a tour.">
+        <title>Psi Upsilon at UW | <?= $title ?></title>
+        <link href="css/bootstrap.min.css" rel="stylesheet" />
+        <link href="css/bootstrap.custom.css" rel="stylesheet" />
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+<?PHP
+	}
+	
+	// Write HTML Footer Info
+	// Default value is close, means they will close html tag for us.
+	function displayFooter() {
+?>
+			<div class="row narrow footer">
+            	<div class="col-md-12">
+                	<p>&copy; Psi Upsilon (&Psi;&Upsilon;) 2014 
+                    | <a href="http://www.psiu.org/">Psi Upsilon Nationals</a> 
+                    | <a href="http://depts.washington.edu/greek/">UW Greeks</a> 
+                    | <a href="https://www.facebook.com/PsiUpsilon.UW">PsiU UW Facebook</a> 
+                    | <a href="http://getbootstrap.com/">Built With Bootstrap</a> 
+                    | <a href="http://students.washington.edu/psiu/contact.php">Contact Us</a> 
+                    | <?= displayMembers(); ?></p>
+                </div>
+            </div>
+        </div>
+	</body>
+</html>
+<?PHP
+	}
+	
+	// Write HTML for top Nav Bar
+	function displayTopNav() {
+?>
+    </head>
+    <body>
+    	<div class="container">
+            <div class="row narrow">
+        		<div class="col-md-12">
+					<div class="jumbotron header">
+                		<h1>Psi Upsilon (&Psi; &Upsilon;) Fraternity</h1>
+               		 	<h2><small>Theta Theta Chapter, University of Washington</small></h2>
+          			</div>
+                </div>
+            </div>
+			<div class="row narrow">
+            	<div class="col-md-12">
+                    <ul class="nav nav-pills nav-justified nav-custom">
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="values.php">Values</a></li>
+                        <li><a href="officers.php">Officers</a></li>
+                        <li><a href="contact.php">Contact</a></li>
+                        <li><a href="calendar.php">Calendar</a></li>
+                        <li><a href="photos.php">Photos</a></li>
+                        <li><a href="faq.php">FAQ</a></li>
+                    </ul>                
+				</div>
+            </div>
+<?PHP
+	}
+	
+	// HTML/Text for the Members Area/Logout Button
+	function displayMembers() {
+		if (isset($_SESSION["logged"]) && $_SESSION["logged"] == true) {
+?>
+<a href="portal.php">Members Area</a> | <a href="portal.php?logout=true">Logout</a>
+<?PHP
+		} else {
+?>
+<a href="portal.php">Members Area</a>
+<?PHP
+		}
+	}
+?>
