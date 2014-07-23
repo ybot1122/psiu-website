@@ -17,3 +17,8 @@ A website feature that was also built from scratch is the yearly calendar. The c
 The biggest feature is the simplified content editing system. In the past the website was served with static html webpages that had to be individually edited and reuploaded. The new website offers an admin portal, secured by a hardcoded user-id and password.
 The admin portal is a simple html form that allows editing of most of all the content panels. This includes events for the calendar. 
 *Photo Upload and Adding/Removing features for Contact groups are incomplete.
+
+### Next Up
+Work on the website took place from Sep 2013 to Jan 2014. After fundamental features were deemed functional, I put the project to the side
+to focus on other endeavors. The next step is a major refactoring of code to eliminate the redundancy currently in the project. Once the code is cleaned,
+we will decide if current features need restructuring or if new features can begin to be rolled in.
