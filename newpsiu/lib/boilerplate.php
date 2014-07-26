@@ -20,16 +20,14 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <title>Psi Upsilon at UW | <?= $title ?></title>
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/bootstrap.custom.css" rel="stylesheet" />
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.custom.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <?PHP
-}
+    }
   
   // Write HTML Footer Info
   // Default value is close, means they will close html tag for us.
