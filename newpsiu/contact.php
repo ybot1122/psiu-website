@@ -9,6 +9,7 @@
   </div>
 </div>
 <?PHP
+  // TODO: best way to convert these into bootstrap tabs? 
   genBio(true, 0, "Rush");
   for($i = 0; $i < 5; $i++) {
     genBio(false, $i, "Rush");

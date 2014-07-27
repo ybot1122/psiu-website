@@ -8,7 +8,7 @@
   function genStandardContent($pagename, $offset, $showDate = true) {
     $pid = findPageId($pagename);
     if ($pid === false) { ?>
-      <div>Setup Error! Page id not found.</div> <?PHP
+      <p>Setup Error! Page id not found.</p> <?PHP
       return;
     }
 
@@ -26,7 +26,7 @@
       </div> <?PHP
       return;
     } ?>
-    <div>Database Error! Content not found in table.</div> <?PHP
+    <p>Database Error! Content not found in table.</p> <?PHP
   }
 
   // function bio content: extracts header, info, and content fields from table
@@ -43,12 +43,12 @@
         </div></div> <?PHP
         return;
       }
-      $data = dbQuery("SELECT header, info, content, edited
+      $data = dbQuery("SELECT header, info, content, edited, id
                         FROM bioContent 
                         WHERE team = :team AND exec = :ec 
                         LIMIT 1 OFFSET :off", [":team"=>$tid, ":ec"=>$exec, ":off"=>$offset]);
     } else {
-      $data = dbQuery("SELECT header, info, content, edited
+      $data = dbQuery("SELECT header, info, content, edited, id
                         FROM bioContent 
                         WHERE exec = :ec 
                         LIMIT 1 OFFSET :off", [":ec"=>$exec, ":off"=>$offset]);
@@ -59,7 +59,7 @@
       <h3><?= $data["header"] ?></h3>
       <div class="col-md-3">
         <img class="img-responsive img-rounded" 
-          src="layout/bio/<?= $offset; ?>.png" alt="<?= $data["header"]; ?>" />
+          src="layout/bio/<?= $data["id"]; ?>.png" alt="<?= $data["header"]; ?>" />
       </div>
       <div class="col-md-9">
         <table>
