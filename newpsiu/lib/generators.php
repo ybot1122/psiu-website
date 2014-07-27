@@ -37,18 +37,18 @@
     <div class="row narrow"> <?PHP
     if ($team) {
       $tid = findTeamId($team);
-      if (!$tid) { ?>
-        <div class="col-md-9 col-md-offset-12">
+      if ($tid === false) { ?>
+        <div class="col-md-9 col-md-offset-3">
           Setup Error! Team id not found.
         </div></div> <?PHP
         return;
       }
-      $data = dbQuery("SELECT header, info, content 
+      $data = dbQuery("SELECT header, info, content, edited
                         FROM bioContent 
                         WHERE team = :team AND exec = :ec 
                         LIMIT 1 OFFSET :off", [":team"=>$tid, ":ec"=>$exec, ":off"=>$offset]);
     } else {
-      $data = dbQuery("SELECT header, info, content 
+      $data = dbQuery("SELECT header, info, content, edited
                         FROM bioContent 
                         WHERE exec = :ec 
                         LIMIT 1 OFFSET :off", [":ec"=>$exec, ":off"=>$offset]);
@@ -58,7 +58,8 @@
       $info = explode("::", $data["info"]); ?>
       <h3><?= $data["header"] ?></h3>
       <div class="col-md-3">
-        <img src="images/bio/<?= $offset; ?>.jpg" alt="<?= $data["header"]; ?>" />
+        <img class="img-responsive img-rounded" 
+          src="layout/bio/<?= $offset; ?>.png" alt="<?= $data["header"]; ?>" />
       </div>
       <div class="col-md-9">
         <table>
@@ -81,9 +82,12 @@
       } ?>
     </tr>
   </table>  
-  <div><?= $data["content"]; ?></div></div></div> <?PHP
+  <div>
+    <?= $data["content"]; ?>
+    <p>last updated: <?= $data["edited"]; ?></p>
+  </div></div></div> <?PHP
     } else { ?>
-      <div class="col-md-9 col-md-offset-12">Database Error!</div></div> <?PHP
+      <div class="col-md-9 col-md-offset-3">Database Error!</div></div> <?PHP
     }
   }
 
