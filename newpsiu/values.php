@@ -10,26 +10,28 @@
     <!-- row 1 -->
     <div class="row narrow">
       <div class="col-md-12">
-        <?= genStandardContent("About", 1); ?>
+        <?= genStandardContent("Values", 0); ?>
       </div>
     </div>
     <!-- row 2 -->
     <div class="row narrow">
       <div class="col-md-12">
-        <?= genStandardContent("About", 2); ?>
+        <?= genStandardContent("Values", 1); ?>
       </div>
     </div>
     <!-- row 3 -->
     <div class="row narrow">
       <div class="col-md-12">
-        <?= genStandardContent("About", 3); ?>
+        <?= genStandardContent("Values", 2); ?>
       </div>
     </div>
   </div>
   <!-- right col (picture collage) -->
   <div class="col-md-6">
     <div class="row narrow collage">
-      <div class="col-md-12"></div>
+      <div class="col-md-12">
+        <!-- TODO: implement function to produce random collage of n pictures -->
+      </div>
       </div>
     </div>
 </div>
