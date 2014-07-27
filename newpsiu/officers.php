@@ -9,7 +9,7 @@
   </div>
 </div>
 <?PHP
-  for ($i = 0; $i <= 1; $i++) {
+  for ($i = 0; $i < 12; $i++) {
     genBio(true, $i);
   }
   displayFooter();

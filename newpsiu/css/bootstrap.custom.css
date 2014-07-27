@@ -20,6 +20,18 @@ h4, .h4 {
 	font-style: italic;
 }
 
+table {
+	width: 100%;
+	border-bottom: 1px black dashed;
+	margin-bottom: 10px;
+}
+
+td, th {
+	padding: 5px;
+	text-align: center;
+	width: 20;
+}
+
 .container {
 	margin-top: 10px;
 	margin-bottom: 10px;

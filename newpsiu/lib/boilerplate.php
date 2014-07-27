@@ -4,6 +4,7 @@
   # TO BE CONSISTENT ACROSS THE WEBSITE
     
   include("db.php");
+  include("generators.php");
   session_start();
   
   // Write HTML Header Info
