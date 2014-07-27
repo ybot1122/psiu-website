@@ -6,7 +6,6 @@
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   } catch(PDOException $e) {
     $db = null;
-    echo($e);
   }
 
   // performs a fetch() instruction and returns an array of the results or NULL
@@ -18,17 +17,16 @@
       $result = $instruction->fetchAll();
     } catch(PDOException $e) {
       $result = null;
-      echo($e);
     }
     return $result;
   }
   
-  // standard content: table must have a "header" and "content" column
+  // standard content: extracts a header and content row from the database
   function genStandardContent($tablename, $id) {
-    $data = dbQuery("SELECT 'header', 'content' FROM ".$tablename." WHERE id = :id", [":id"=>$id]);
+    $data = dbQuery("SELECT header, content FROM ".$tablename." WHERE id = :id", [":id"=>$id]);
     if ($data != null) { ?>
-      <h3><?= $data[0]["header"]; ?></h3>
-      <div><?= $data[0]["content"]; ?></div> <?PHP
+      <h3><?= htmlspecialchars_decode($data[0][0]); ?></h3>
+      <div><?= htmlspecialchars_decode($data[0][1]); ?></div> <?PHP
     } else { ?>
       <div>Database Error! Content failed to load</div> <?PHP
     }
