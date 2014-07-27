@@ -9,5 +9,8 @@
   </div>
 </div>
 <?PHP
+  for ($i = 0; $i <= 1; $i++) {
+    genBio(true, $i);
+  }
   displayFooter();
 ?>

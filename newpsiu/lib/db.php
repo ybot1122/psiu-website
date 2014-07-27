@@ -8,11 +8,18 @@
     $db = null;
   }
   $pages = ["Home", "Values", "Officers", "Contact", "Calendar", "Photos", "Faq"];
+  $teams = ["Rush", "Social", "Philanthropy"];
 
   // returns the id number associated with the name of a page
   function findPageId($name) {
     global $pages;
     return array_search($name, $pages);
+  }
+
+  // returns the id number associated with the name of a page
+  function findTeamId($name) {
+    global $teams;
+    return array_search($name, $teams);
   }
 
   // performs a fetch() instruction and returns an array of the results or NULL
@@ -38,8 +45,8 @@
   }
   
   // standard content: extracts header and content fields row from the table
-  function genStandardContent($tablename, $offset, $showDate = true) {
-    $pid = findPageId($tablename);
+  function genStandardContent($pagename, $offset, $showDate = true) {
+    $pid = findPageId($pagename);
     if ($pid === false) { ?>
       <div>Setup Error! Page id not found.</div> <?PHP
       return;
@@ -63,13 +70,33 @@
   }
 
   // function bio content: extracts header, info, and content fields from table
-  // info field will be string parsed with the following pattern
-  // name::hometown::major::phone::email
-  function genBio($tablename, $id) {
-    $data = dbQuery("SELECT header, info, content FROM ".$tablename." WHERE id = :id",
-      [":id"=>$id]);
+  // $exec: true for including exec members, false for excluding exec 
+  // $offset: 
+  // $team: string specifying a team to filter by
+  function genBio($exec, $offset, $team = false) {
+    if ($team) {
+      $tid = findTeamId($team);
+      if (!$tid) { ?>
+        <div>Setup Error! Team id not found.</div> <?PHP
+        return;
+      }
+      $data = dbQuery("SELECT header, info, content 
+                        FROM bioContent 
+                        WHERE team = :team AND exec = :ec 
+                        LIMIT 1 OFFSET :off", [":team"=>$tid, ":ec"=>$exec, ":off"=>$offset]);
+    } else {
+      $data = dbQuery("SELECT header, info, content 
+                        FROM bioContent 
+                        WHERE exec = :ec 
+                        LIMIT 1 OFFSET :off", [":ec"=>$exec, ":off"=>$offset]);
+    }
+
     if ($data != null) { 
-      $info = explode("::". $data["info"]);
+      $info = explode("::", $data["info"]);
+      if (count($info) != 5) { ?>
+        <div>Content Error! Info for this bio is malformed.</div> <?PHP
+        return;
+      }
       ?>
       <div class="row narrow">
         <h3><?= $data["header"] ?></h3>
@@ -92,6 +119,12 @@
               <td><?= $info[3]; ?></td>
               <td><?= $info[4]; ?></td>
             </tr>
+            <tr>
+              <td colspan="5">
+                <?= $data["content"]; ?>
+              </td>
+            </tr>
+          </table>
         </div>
       </div> <?PHP
     } else { ?>
