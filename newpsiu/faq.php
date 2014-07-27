@@ -1,11 +1,11 @@
 <?PHP
   include("lib/boilerplate.php");
-  displayHeader("Officers");
+  displayHeader("FAQ");
   displayTopNav();
 ?>
 <div class="row">
   <div class="col-md-12">
-    <?= genStandardContent("Officers", 0, false); ?>
+    <?= genStandardContent("Faq", 0, false); ?>
   </div>
 </div>
 <?PHP

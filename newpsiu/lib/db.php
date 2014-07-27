@@ -7,7 +7,7 @@
   } catch(PDOException $e) {
     $db = null;
   }
-  $pages = ["Home", "Values", "Officers"];
+  $pages = ["Home", "Values", "Officers", "Contact", "Calendar", "Photos", "Faq"];
 
   // returns the id number associated with the name of a page
   function findPageId($name) {
@@ -38,7 +38,7 @@
   }
   
   // standard content: extracts header and content fields row from the table
-  function genStandardContent($tablename, $offset) {
+  function genStandardContent($tablename, $offset, $showDate = true) {
     $pid = findPageId($tablename);
     if ($pid === false) { ?>
       <div>Setup Error! Page id not found.</div> <?PHP
@@ -53,7 +53,9 @@
       <h3><?= htmlspecialchars_decode($data[0]); ?></h3>
       <div>
         <?= htmlspecialchars_decode($data[1]); ?>
-        <p>last updated: <?= htmlspecialchars_decode($data[2]); ?></p>
+        <?PHP if ($showDate == true): ?>
+        <p>last updated: <?= htmlspecialchars_decode($data[2]); ?></p> 
+        <?PHP endif; ?>
       </div> <?PHP
       return;
     } ?>

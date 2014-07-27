@@ -16,7 +16,7 @@
     <!-- row 2 -->
     <div class="row narrow">
       <div class="col-md-12">
-        <?= genStandardContent("Values", 1); ?>
+        <?= genStandardContent("Values", 1, false); ?>
       </div>
     </div>
     <!-- row 3 -->

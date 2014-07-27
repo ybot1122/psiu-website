@@ -11,7 +11,7 @@
 </div>
 <div class="row narrow">
   <div class="col-md-6">
-    <?= genStandardContent("Home", 1); ?>
+    <?= genStandardContent("Home", 1, false); ?>
   </div>
   <div class="col-md-6">
     <!-- row 1, events -->
