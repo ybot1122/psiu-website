@@ -41,28 +41,28 @@
 
   // Helper function to generate team-management forms
   function genTeams($content, $counts) {
-    $organized = ["Exec-Only"=>array_slice($content, 0, $counts[0]["num"]),
-                  "Rush"=>array_slice($content, $counts[0]["num"], $counts[1]["num"]),
-                  "Social"=>array_slice($content, $counts[0]["num"] + $counts[1]["num"],
-                      $counts[2]["num"]),
-                  "Philanthropy"=>array_slice($content, 
-                    $counts[0]["num"] + $counts[1]["num"] + $counts[2]["num"])];
-    foreach($organized as $key=>$team) { ?>
+    for($i = 0; $i < $counts[0]["num"]; $i++)
+    $teams = ["Exec-Only"=>0,
+              "Rush"=>$counts[0]["num"],
+              "Social"=>$counts[0]["num"] + $counts[1]["num"],
+              "Philanthropy"=>$counts[0]["num"] + $counts[1]["num"] + $counts[2]["num"]];
+    for($i = 0; $i < count($content); $i++) {
+      $hd = array_search($i, $teams);
+      if ($hd !== false) { ?>
+        <h3><?= $hd; ?></h3> <?PHP
+      } ?>
       <fieldset>
-        <h3><?= $key; ?></h3> <?PHP
-      for($i = 0; $i < count($team); $i++) { 
-        $info = explode("::", $team[$i]["info"]); ?>
-        <input type="text" value="<?= $team[$i]["header"]; ?>" />
-        <textarea><?= $team[$i]["content"]; ?></textarea> <?PHP
-        for($i = 0; $i < 5; $i++) { 
-          if ($i >= count($info)) { ?>
+        <input type="text" value="<?= $content[$i]["header"]; ?>" />
+        <textarea><?= $content[$i]["content"]; ?></textarea> <?PHP
+        $info = explode("::", $teams[$i]["info"]);
+        for($j = 0; $j < 5; $j++) { 
+          if ($j >= count($info)) { ?>
             <input type="text" value="--" /> <?PHP
           } else { ?> 
-          <input type="text" value="<?= $info[$i]; ?>" /> <?PHP
+            <input type="text" value="<?= $info[$j]; ?>" /> <?PHP
           }
-        }
-      } ?>
-      </fieldset> <?PHP
+        } ?>
+        </fieldset> <?PHP
     }
   }
 ?>
