@@ -1,0 +1,20 @@
+fieldset {
+	margin-bottom: 20px;
+}
+
+input, textarea {
+	margin: 10px;
+	padding: 10px;
+	border: 1px silver solid;
+	width: 80%;
+	display: block;
+}
+
+textarea {
+	height: 150px;
+}
+
+input[type="submit"]:hover {
+	background: white;
+	font-weight: bold;
+}

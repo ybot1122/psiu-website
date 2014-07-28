@@ -23,7 +23,7 @@
   }
 
   // performs a fetch() instruction and returns an array of the results or NULL
-  function dbQuery($statement, $values = array()) {
+  function dbQuery($statement, $values = array(), $all = false) {
     global $db;
     try {
       $instruction = $db->prepare($statement);
@@ -36,7 +36,11 @@
         }
       }
       $instruction->execute();
-      $result = $instruction->fetch();
+      if (!$all) {
+        $result = $instruction->fetch();
+      } else {
+        $result = $instruction->fetchAll();
+      }
     } catch(PDOException $e) {
       $result = null;
       echo($e);

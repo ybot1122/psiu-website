@@ -85,11 +85,11 @@
   function displayMembers() {
     if (isset($_SESSION["logged"]) && $_SESSION["logged"] == true) {
 ?>
-<a href="portal.php">Members Area</a> | <a href="portal.php?logout=true">Logout</a>
+<a href="login.php">Members Area</a> | <a href="login.php?logout=true">Logout</a>
 <?PHP
     } else {
 ?>
-<a href="portal.php">Members Area</a>
+<a href="login.php">Members Area</a>
 <?PHP
     }
   }
