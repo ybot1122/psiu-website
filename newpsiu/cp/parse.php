@@ -14,9 +14,13 @@
           return;
         }
       } else if ($_GET["edit"] == "events") {
-
-      } else if ($_GET["edit"] == "static") {
-
+      } else if ($_GET["edit"] == "teams") {
+        $content = dbQuery("SELECT team, exec, header, content, info FROM bioContent
+                            ORDER BY team ASC", [], true);
+        $counts = dbQuery("SELECT COUNT(bioContent.id) AS num
+                            FROM bioContent GROUP BY team ORDER BY team ASC", [], true);
+        genTeams($content, $counts);
+        return;
       }
     } ?>
     <p>Welcome to the admin panel. The links are to the left.</p> <?PHP
@@ -33,5 +37,32 @@
     } ?>
       <input type="submit" value="Submit!" />
     </form> <?PHP
+  }
+
+  // Helper function to generate team-management forms
+  function genTeams($content, $counts) {
+    $organized = ["Exec-Only"=>array_slice($content, 0, $counts[0]["num"]),
+                  "Rush"=>array_slice($content, $counts[0]["num"], $counts[1]["num"]),
+                  "Social"=>array_slice($content, $counts[0]["num"] + $counts[1]["num"],
+                      $counts[2]["num"]),
+                  "Philanthropy"=>array_slice($content, 
+                    $counts[0]["num"] + $counts[1]["num"] + $counts[2]["num"])];
+    foreach($organized as $key=>$team) { ?>
+      <fieldset>
+        <h3><?= $key; ?></h3> <?PHP
+      for($i = 0; $i < count($team); $i++) { 
+        $info = explode("::", $team[$i]["info"]); ?>
+        <input type="text" value="<?= $team[$i]["header"]; ?>" />
+        <textarea><?= $team[$i]["content"]; ?></textarea> <?PHP
+        for($i = 0; $i < 5; $i++) { 
+          if ($i >= count($info)) { ?>
+            <input type="text" value="--" /> <?PHP
+          } else { ?> 
+          <input type="text" value="<?= $info[$i]; ?>" /> <?PHP
+          }
+        }
+      } ?>
+      </fieldset> <?PHP
+    }
   }
 ?>
