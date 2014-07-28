@@ -24,11 +24,11 @@
 
   // Helper function to do generation of static-content forms
   function genStatic($content) { ?>
-    <form method="POST" action="#"> <?PHP
+    <form method="POST" action="cp/update.php?edit=<?= $_GET["edit"]; ?>&page=<?= $_GET["page"]; ?>"> <?PHP
     foreach($content as $panel) { ?>
       <fieldset>
-        <input id="<?= $panel["id"]; ?>-header" type="text" value="<?= $panel["header"]; ?>" />
-        <textarea id="<?= $panel["id"]; ?>-content"><?= $panel["content"]; ?></textarea>
+        <input name="<?= $panel["id"]; ?>-header" type="text" value="<?= $panel["header"]; ?>" />
+        <textarea name="<?= $panel["id"]; ?>-content"><?= $panel["content"]; ?></textarea>
       </fieldset> <?PHP
     } ?>
       <input type="submit" value="Submit!" />

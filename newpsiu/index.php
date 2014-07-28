@@ -6,7 +6,7 @@
 ?>
 <div class="row narrow">
   <div class="col-md-12">
-    <?= genStandardContent("Home", 0); ?>
+    <?= genStandardContent("Home", 0, false); ?>
   </div>
 </div>
 <div class="row narrow">
@@ -25,7 +25,7 @@
     <!-- row 2, house -->
     <div class="row narrow">
       <div class="col-md-12">
-        <?= genStandardContent("Home", 2); ?>
+        <?= genStandardContent("Home", 2, false); ?>
       </div>
     </div>
   </div>

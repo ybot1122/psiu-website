@@ -1,6 +1,6 @@
 <?PHP
   // INCLUDE THIS FILE ON ANY PAGE THAT IS PROTECTED
-  if (!isset($_SESSION["logged"]) || $_SESSION["logged"] != true) {
+  if (!isset($_SESSION["logged"]) || $_SESSION["logged"] !== true) {
     displayHeader("Access Denied");
     displayTopNav();
 ?>

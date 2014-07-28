@@ -10,7 +10,7 @@
     <!-- row 1 -->
     <div class="row narrow">
       <div class="col-md-12">
-        <?= genStandardContent("Values", 0); ?>
+        <?= genStandardContent("Values", 0, false); ?>
       </div>
     </div>
     <!-- row 2 -->
@@ -22,7 +22,7 @@
     <!-- row 3 -->
     <div class="row narrow">
       <div class="col-md-12">
-        <?= genStandardContent("Values", 2); ?>
+        <?= genStandardContent("Values", 2, false); ?>
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <?PHP
   // MySQL setup
-  include("../../info.php");
+  include(dirname(__DIR__)."/../../info.php");
   try {
     $db = new PDO("mysql:host=".$dbhost.";port=1818;dbname=".$dbname, $dbuser, $dbpass);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
