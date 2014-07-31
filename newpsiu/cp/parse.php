@@ -40,29 +40,31 @@
   }
 
   // Helper function to generate team-management forms
+  // Really stupidly implemented i'm not sure how I got myself into this one lol...
   function genTeams($content, $counts) {
-    for($i = 0; $i < $counts[0]["num"]; $i++)
-    $teams = ["Exec-Only"=>0,
-              "Rush"=>$counts[0]["num"],
-              "Social"=>$counts[0]["num"] + $counts[1]["num"],
-              "Philanthropy"=>$counts[0]["num"] + $counts[1]["num"] + $counts[2]["num"]];
-    for($i = 0; $i < count($content); $i++) {
-      $hd = array_search($i, $teams);
-      if ($hd !== false) { ?>
-        <h3><?= $hd; ?></h3> <?PHP
+    for ($i = 0; $i < count($content); $i++) {
+      // pick header then generate content
+      if ($i == 0) { ?>
+        <h3>Exec Team</h3><fieldset> <?PHP 
+      } else if ($i == $counts[0]["num"]) { ?>
+        </fieldset><h3>Rush Team</h3><fieldset> <?PHP
+      } else if ($i == $counts[0]["num"] + $counts[1]["num"]) { ?>
+        </fieldset><h3>Social Team</h3><fieldset> <?PHP
+      } else if ($i == $counts[0]["num"] + $counts[1]["num"] + $counts[2]["num"]) { ?>
+        </fieldset><h3>Philanthropy Team</h3><fieldset> <?PHP
       } ?>
-      <fieldset>
-        <input type="text" value="<?= $content[$i]["header"]; ?>" />
-        <textarea><?= $content[$i]["content"]; ?></textarea> <?PHP
-        $info = explode("::", $teams[$i]["info"]);
-        for($j = 0; $j < 5; $j++) { 
-          if ($j >= count($info)) { ?>
-            <input type="text" value="--" /> <?PHP
-          } else { ?> 
-            <input type="text" value="<?= $info[$j]; ?>" /> <?PHP
-          }
-        } ?>
-        </fieldset> <?PHP
-    }
+      <input type="text" class="team-header" value="<?= $content[$i]["header"]; ?>" />
+      <textarea class="team-bio"><?= $content[$i]["content"]; ?></textarea> <?PHP
+      $info = explode("::", $content[$i]["info"]);
+      $fields = ["nickname", "hometown", "major", "phone", "email"];
+      for($j = 0; $j < 5; $j++) { 
+        if ($j >= count($info) || empty($info[$j])) { ?>
+          <input class="team-info" type="text" value="<?= $fields[$j] ?>" /> <?PHP
+        } else { ?> 
+          <input class="team-info" type="text" value="<?= $info[$j]; ?>" /> <?PHP
+        }
+      }
+    } ?>
+    </fieldset> <?PHP
   }
 ?>
