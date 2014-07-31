@@ -38,7 +38,7 @@
     </ul>
   </div>
   <div class="col-md-9">
-    <h3>Admin Panel</h3>
+    <?= genTitle(); ?>
     <?= genForm(); ?>
   </div>
 </div>

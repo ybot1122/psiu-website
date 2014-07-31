@@ -1,4 +1,26 @@
 <?PHP
+  // used to create the header for each admin page
+  function genTitle() {
+    global $pages; ?>
+    <h3><a href="admin.php">Admin Panel</a> <?PHP
+    if (isset($_GET["edit"]) && isset($_GET["page"])) {
+      if ($_GET["edit"] == "static") {
+        $pid = findPageId($_GET["page"]);
+        if ($pid !== false) { ?>
+          >> <?= $pages[$pid];?> Static Content</h3> <?PHP
+          return;
+        }
+      } else if ($_GET["edit"] == "events") { ?>
+        >> Manage Events</h3> <?PHP
+        return;
+      } else if ($_GET["edit"] == "teams") { ?>
+        >> Manage Team Members</h3> <?PHP
+        return;
+      }
+    } ?>
+    </h3> <?PHP
+  }
+
   // Parses the get variables and calls the appropriate function to generate our forms
   function genForm() {
     if (isset($_GET["edit"]) && isset($_GET["page"])) {
@@ -15,11 +37,15 @@
         }
       } else if ($_GET["edit"] == "events") {
       } else if ($_GET["edit"] == "teams") {
-        $content = dbQuery("SELECT team, exec, header, content, info FROM bioContent
+        $content = dbQuery("SELECT team, exec, header, content, info, id FROM bioContent
                             ORDER BY team ASC", [], true);
         $counts = dbQuery("SELECT COUNT(bioContent.id) AS num
-                            FROM bioContent GROUP BY team ORDER BY team ASC", [], true);
-        genTeams($content, $counts);
+                            FROM bioContent GROUP BY team ORDER BY team ASC", [], true); ?>
+      <form method="POST" action="cp/update.php?edit=<?= $_GET["edit"]; ?>&page=<?= $_GET["page"]; ?>"
+        enctype="multipart/form-data"> <?PHP
+        genTeams($content, $counts); ?>
+        <input type="submit" value="Submit!" />
+      </form> <?PHP
         return;
       }
     } ?>
@@ -31,8 +57,8 @@
     <form method="POST" action="cp/update.php?edit=<?= $_GET["edit"]; ?>&page=<?= $_GET["page"]; ?>"> <?PHP
     foreach($content as $panel) { ?>
       <fieldset>
-        <input name="<?= $panel["id"]; ?>-header" type="text" value="<?= $panel["header"]; ?>" />
-        <textarea name="<?= $panel["id"]; ?>-content"><?= $panel["content"]; ?></textarea>
+        <input name="<?= $panel["id"]; ?>-header" class="static-header" type="text" value="<?= $panel["header"]; ?>" />
+        <textarea name="<?= $panel["id"]; ?>-content" class="static-content"><?= $panel["content"]; ?></textarea>
       </fieldset> <?PHP
     } ?>
       <input type="submit" value="Submit!" />
@@ -42,6 +68,7 @@
   // Helper function to generate team-management forms
   // Really stupidly implemented i'm not sure how I got myself into this one lol...
   function genTeams($content, $counts) {
+    $fields = ["nickname", "hometown", "major", "phone", "email"];
     for ($i = 0; $i < count($content); $i++) {
       // pick header then generate content
       if ($i == 0) { ?>
@@ -53,17 +80,36 @@
       } else if ($i == $counts[0]["num"] + $counts[1]["num"] + $counts[2]["num"]) { ?>
         </fieldset><h3>Philanthropy Team</h3><fieldset> <?PHP
       } ?>
-      <input type="text" class="team-header" value="<?= $content[$i]["header"]; ?>" />
-      <textarea class="team-bio"><?= $content[$i]["content"]; ?></textarea> <?PHP
+      <input name="<?= $content[$i]["id"]; ?>-header" type="text" class="team-header"
+        value="<?= $content[$i]["header"]; ?>" />
+      <div class="row">
+        <div class="col-md-3">
+          <img class="img-responsive img-rounded" 
+            src="layout/bio/<?= $content[$i]["id"]; ?>.png" alt="<?= $content[$i]["header"]; ?>" />
+          <input name="<?= $content[$i][$id]; ?>-img" class="team-upload" type="file">
+        </div>
+        <div class="col-md-9">
+      <table>
+        <tr> <?PHP
+      foreach($fields as $f) { ?>
+        <th><?= ucfirst($f); ?></th> <?PHP
+      } ?>
+        </tr>
+        <tr> <?PHP
       $info = explode("::", $content[$i]["info"]);
-      $fields = ["nickname", "hometown", "major", "phone", "email"];
       for($j = 0; $j < 5; $j++) { 
         if ($j >= count($info) || empty($info[$j])) { ?>
-          <input class="team-info" type="text" value="<?= $fields[$j] ?>" /> <?PHP
+          <td><input name="<?= $content[$i]["id"]."-".$fields[$j]; ?>" class="team-info"
+            type="text" value="<?= $fields[$j] ?>" /></td> <?PHP
         } else { ?> 
-          <input class="team-info" type="text" value="<?= $info[$j]; ?>" /> <?PHP
+          <td><input name="<?= $content[$i]["id"]."-".$fields[$j]; ?>" class="team-info"
+            type="text" value="<?= $info[$j]; ?>" /></td> <?PHP
         }
-      }
+      } ?>
+        </tr>
+      </table>
+      <textarea name="<?= $content[$i]["id"]; ?>-content" 
+        class="team-bio"><?= $content[$i]["content"]; ?></textarea></div></div><?PHP
     } ?>
     </fieldset> <?PHP
   }
