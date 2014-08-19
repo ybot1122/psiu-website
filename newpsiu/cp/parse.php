@@ -16,6 +16,8 @@
       } else if ($_GET["edit"] == "teams") { ?>
         >> Manage Team Members</h3> <?PHP
         return;
+      }else if ($_GET["edit"] == "gallery") { ?>
+        >> Manage Photo Gallery</h3> <?PHP
       }
     } ?>
     </h3> <?PHP
@@ -53,6 +55,16 @@
         // member management - add
         if($_GET["page"] == "add") {
           genAddMember();
+          return;
+        }
+      } else if ($_GET["edit"] == "gallery") {
+        // gallery management - main
+        if ($_GET["page"] == "main") {
+
+        }
+        // gallery management - add
+        if ($_GET["page"] == "add") {
+          genAddPhoto();
           return;
         }
       }
@@ -164,6 +176,32 @@
       <input type="radio" name="team" value="2">Philanthropy Team
       <input type="checkbox" name="ec">EC Member?
       <input type="submit" value="Add Member" />
+    </form> <?PHP
+  }
+
+  // helper function to generate a form for uploading a new gallery image
+  function genAddPhoto() { ?>
+    <form type="POST" action="cp/update.php?edit=gallery&page=add" enctype="multipart/form-data">
+      <table>
+        <tr>
+          <td class="formLabel">Photo Title:</td>
+          <td><input name="header" type="text" class="team-header" /></td>
+        </tr>
+        <tr>
+          <td class="formLabel">Photo Description:</td>
+          <td><input name="content" type="text" class="team-header" /></td>
+        </tr>
+        <tr>
+          <td class="formLabel">Image Upload (jpg, jpeg, png allowed):</td>
+          <td>
+            <input name="img" class="team-upload" type="file" />
+            <span class="small">*Remember! Use common sense on what you choose to upload!</span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2"><input type="submit" value="Upload To Photo Gallery" /></td>
+        </tr>
+      </table>
     </form> <?PHP
   }
 ?>

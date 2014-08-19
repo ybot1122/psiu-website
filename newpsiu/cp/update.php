@@ -43,7 +43,7 @@
                       ":info"=>$info,
                       ":id"=>$curr["id"]];
           dbPerform($query, $params);
-          uploadFile($curr["id"]."-", $curr["id"]);
+          uploadBioThumbnail($curr["id"]."-", $curr["id"]);
         }
       }
     }
@@ -62,13 +62,28 @@
                   ":info" => $info];
       dbPerform($query, $params);
       $id = dbQuery("SELECT id FROM bioContent ORDER BY edited DESC LIMIT 1")["id"];
-      uploadFile("", $id);
+      uploadBioThumbnail("", $id);
+    }
+    // editing and removing gallery photos
+    if ($_GET["edit"] == "gallery" && $_GET["page"] == "main") {
+
+    }
+    // adding a new gallery photo
+    if ($_GET["edit"] == "gallery" && $_GET["page"] == "main") {
+      if (isset($_POST["header"]) && isset($_POST["content"]) && isset($_FILES["img"])) {
+        if ($_FILES["img"]["type"] == "image/png"
+        || $_FILES["img"]["type"] == "image/jpg"
+        || $_FILES["img"]["type"] == "image/jpeg") {
+          $query = "INSERT INTO galleryContent (header, content) VALUES (:hd, :cnt)";
+          move_uploaded_file(filename, destination)
+        }
+      }
     }
   }
 
   // helper function that checks if a file was submitted and uploads it if it
-  // is valid. accepts a string to prefix the file name identifier
-  function uploadFile($prefix, $id) {
+  // is valid for bio thumbnails
+  function uploadBioThumbnail($prefix, $id) {
     $name = $prefix."img";
     if (isset($_FILES[$name]) && $_FILES[$name]["error"] == 0) {
       if ($_FILES[$name]["type"] == "image/png") {

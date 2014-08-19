@@ -30,7 +30,6 @@ input[type="submit"]:hover {
 }
 
 .team-info {
-	width: 100%;
 	margin: 0px;
 }
 
@@ -42,6 +41,11 @@ input[type="submit"]:hover {
 	text-align: center;
 	border: 1px red dotted;
 	padding: 5px;
+}
+
+.formLabel {
+	width: 20%;
+	text-align: right;
 }
 
 table, td, tr {

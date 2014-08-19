@@ -36,6 +36,13 @@
           <li><a href="admin.php?edit=teams&page=add">Add New Member</a></li>
         </ul>
       </li>
+      <li>
+        <h4>Photo Gallery</h4>
+        <ul>
+          <li><a href="admin.php?edit=gallery&page=main">Edit Current Photos</a></li>
+          <li><a href="admin.php?edit=gallery&page=add">Add New Photo</a></li>
+        </ul>
+      </li>
     </ul>
   </div>
   <div class="col-md-9">
