@@ -19,10 +19,6 @@
         $params = [":hd"=>$_POST[$curr["id"]."-header"],
                     ":cnt"=>$_POST[$curr["id"]."-content"],
                     ":id"=>$curr["id"]];
-        // TODO: Calling dbQuery executes a fetch statement. This causes it to catch an error
-        // because the query has no results to fetch. 
-        // Since database still updates, I'm ignoring this issue for now. It will require
-        // reorganizing some function logic
         dbPerform($query, $params);
       }
     }
@@ -46,8 +42,8 @@
                       ":cnt"=>$_POST[$curr["id"]."-content"],
                       ":info"=>$info,
                       ":id"=>$curr["id"]];
-          // TODO: same as above
           dbPerform($query, $params);
+          uploadFile($curr["id"]."-", $curr["id"]);
         }
       }
     }
@@ -65,7 +61,24 @@
                   ":cnt" => $_POST["content"],
                   ":info" => $info];
       dbPerform($query, $params);
+      $id = dbQuery("SELECT id FROM bioContent ORDER BY edited DESC LIMIT 1")["id"];
+      uploadFile("", $id);
     }
   }
+
+  // helper function that checks if a file was submitted and uploads it if it
+  // is valid. accepts a string to prefix the file name identifier
+  function uploadFile($prefix, $id) {
+    $name = $prefix."img";
+    if (isset($_FILES[$name]) && $_FILES[$name]["error"] == 0) {
+      if ($_FILES[$name]["type"] == "image/png") {
+        $dimension = getimagesize($_FILES[$name]["tmp_name"]);
+        if ($dimension[0] == 300 && $dimension[1] == 200) {
+          move_uploaded_file($_FILES[$name]["tmp_name"], "../layout/bio/".$id.".png");
+        }
+      }
+    }
+  }
+
   header("Location: ../admin.php?edit=".$_GET["edit"]."&page=".$_GET["page"]);
 ?>
