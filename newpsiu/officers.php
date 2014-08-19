@@ -9,7 +9,8 @@
   </div>
 </div>
 <?PHP
-  for ($i = 0; $i < 12; $i++) {
+  $count = dbQuery("SELECT COUNT(id) FROM bioContent WHERE team = -1")[0];
+  for ($i = 0; $i < $count; $i++) {
     genBio(true, $i);
   }
   displayFooter();
