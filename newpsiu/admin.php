@@ -32,7 +32,8 @@
       <li>
         <h4>Manage EC/Team Members</h4>
         <ul>
-          <li><a href="admin.php?edit=teams&page=main">Members</a></li>
+          <li><a href="admin.php?edit=teams&page=main">Edit Current Members</a></li>
+          <li><a href="admin.php?edit=teams&page=add">Add New Member</a></li>
         </ul>
       </li>
     </ul>

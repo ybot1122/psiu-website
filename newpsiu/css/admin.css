@@ -37,3 +37,13 @@ input[type="submit"]:hover {
 .team-upload {
 	width: 100%;
 }
+
+.delbox {
+	text-align: center;
+	border: 1px red dotted;
+	padding: 5px;
+}
+
+table, td, tr {
+	border: none;
+}

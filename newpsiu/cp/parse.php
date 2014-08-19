@@ -37,16 +37,24 @@
         }
       } else if ($_GET["edit"] == "events") {
       } else if ($_GET["edit"] == "teams") {
-        $content = dbQuery("SELECT team, exec, header, content, info, id FROM bioContent
-                            ORDER BY team ASC", [], true);
-        $counts = dbQuery("SELECT COUNT(bioContent.id) AS num
-                            FROM bioContent GROUP BY team ORDER BY team ASC", [], true); ?>
-      <form method="POST" action="cp/update.php?edit=<?= $_GET["edit"]; ?>&page=<?= $_GET["page"]; ?>"
-        enctype="multipart/form-data"> <?PHP
-        genTeams($content, $counts); ?>
-        <input type="submit" value="Submit!" />
-      </form> <?PHP
-        return;
+          // member management - main
+          if ($_GET["page"] == "main") {
+          $content = dbQuery("SELECT team, exec, header, content, info, id FROM bioContent
+                              ORDER BY team ASC", [], true);
+          $counts = dbQuery("SELECT COUNT(bioContent.id) AS num
+                              FROM bioContent GROUP BY team ORDER BY team ASC", [], true); ?>
+        <form method="POST" action="cp/update.php?edit=<?= $_GET["edit"]; ?>&page=<?= $_GET["page"]; ?>"
+          enctype="multipart/form-data"> <?PHP
+          genTeams($content, $counts); ?>
+          <input type="submit" value="Submit!" />
+        </form> <?PHP
+          return;
+        }
+        // member management - add
+        if($_GET["page"] == "add") {
+          genAddMember();
+          return;
+        }
       }
     } ?>
     <p>Welcome to the admin panel. The links are to the left.</p> <?PHP
@@ -86,7 +94,11 @@
         <div class="col-md-3">
           <img class="img-responsive img-rounded" 
             src="layout/bio/<?= $content[$i]["id"]; ?>.png" alt="<?= $content[$i]["header"]; ?>" />
-          <input name="<?= $content[$i][$id]; ?>-img" class="team-upload" type="file">
+          <input name="<?= $content[$i]["id"]; ?>-img" class="team-upload" type="file">
+          <div class="delbox">
+            <span class="small">If this box is checked, this profile will be removed upon submit<br /></span>
+            <input name="<?= $content[$i]["id"]; ?>-del" type="checkbox" />
+          </div>
         </div>
         <div class="col-md-9">
       <table>
@@ -112,5 +124,46 @@
         class="team-bio"><?= $content[$i]["content"]; ?></textarea></div></div><?PHP
     } ?>
     </fieldset> <?PHP
+  }
+
+  // helper function to generate the form for adding a new member
+  function genAddMember() { ?>
+    <form method="POST" action="cp/update.php?edit=teams&page=add"
+      enctype="multipart/form-data">
+      <input name="header" type="text" value="Member Name" class="team-header" />
+      <div class="row">
+        <div class="col-md-3">
+          <img class="img-responsive img-rounded" 
+            src="layout/bio/default.png" alt="thumbnail" />
+          <input name="img" class="team-upload" type="file">
+        </div>
+        <div class="col-md-9">
+          <table>
+            <tr>
+              <th>Nickname</th>
+              <th>Hometown</th>
+              <th>Major</th>
+              <th>Phone</th>
+              <th>Email</th>
+            </tr>
+            <tr>
+              <td><input name="nickname" type="text" class="team-info" value="--" /></td>
+              <td><input name="hometown" type="text" class="team-info" value="--" /></td>
+              <td><input name="major" type="text" class="team-info" value="--" /></td>
+              <td><input name="phone" type="text" class="team-info" value="--" /></td>
+              <td><input name="email" type="text" class="team-info" value="--" /></td>
+            </tr>
+          </table>
+          <textarea name="content" class="team-bio">Summary/Bio</textarea>
+        </div>
+      </div>
+      <span class="small">select a team, then indicate if the member is also on EC</span><br />
+      <input type="radio" name="team" value="-1" checked>None
+      <input type="radio" name="team" value="0">Rush Team
+      <input type="radio" name="team" value="1">Social Team
+      <input type="radio" name="team" value="2">Philanthropy Team
+      <input type="checkbox" name="ec">EC Member?
+      <input type="submit" value="Add Member" />
+    </form> <?PHP
   }
 ?>

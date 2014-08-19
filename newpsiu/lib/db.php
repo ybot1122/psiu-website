@@ -47,4 +47,22 @@
     }
     return $result;
   }
+
+  function dbPerform($statement, $values = array()) {
+    global $db;
+    try {
+      $instruction = $db->prepare($statement);
+      // loop through values and bind param based on type
+      foreach($values as $key => $item) {
+        if (gettype($item) == "integer") {
+          $instruction->bindValue($key, $item, PDO::PARAM_INT);
+        } else {
+          $instruction->bindValue($key, $item, PDO::PARAM_STR);
+        }
+      }
+      $instruction->execute();
+    } catch(PDOException $e) {
+      echo($e);
+    }
+  }
 ?>
