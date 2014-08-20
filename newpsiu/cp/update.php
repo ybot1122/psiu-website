@@ -1,8 +1,9 @@
 <?PHP
   session_start();
+  include("../lib/lock.php");
   include("../lib/db.php");
-  if (!isset($_SESSION["logged"]) || $_SESSION["logged"] !== true 
-    || !isset($_GET["edit"]) || !isset($_GET["page"])) {
+  include("upload.php");
+  if (!isset($_GET["edit"]) || !isset($_GET["page"])) {
     header("Location: ../login.php");
     die();
   } 
@@ -66,30 +67,34 @@
     }
     // editing and removing gallery photos
     if ($_GET["edit"] == "gallery" && $_GET["page"] == "main") {
-
-    }
-    // adding a new gallery photo
-    if ($_GET["edit"] == "gallery" && $_GET["page"] == "main") {
-      if (isset($_POST["header"]) && isset($_POST["content"]) && isset($_FILES["img"])) {
-        if ($_FILES["img"]["type"] == "image/png"
-        || $_FILES["img"]["type"] == "image/jpg"
-        || $_FILES["img"]["type"] == "image/jpeg") {
-          $query = "INSERT INTO galleryContent (header, content) VALUES (:hd, :cnt)";
-          move_uploaded_file(filename, destination)
+      $ids = dbQuery("SELECT id FROM galleryContent", [], true);
+      $query = "UPDATE galleryContent
+        SET header = :hd, content = :cnt
+        WHERE id = :id";
+      foreach($ids as $curr) {
+        if (isset($_POST[$curr["id"]."-del"])) {
+          dbPerform("DELETE FROM galleryContent WHERE id = :id", [":id" => $curr["id"]]);
+          if (file_exists("../layout/gallery/".$id.".png")) {
+            unlink("../layout/gallery/".$id.".png");
+          }
+        } else {
+          $params = [":hd"=>$_POST[$curr["id"]."-header"],
+                      ":cnt"=>$_POST[$curr["id"]."-content"],
+                      ":id"=>$curr["id"]];
+          dbPerform($query, $params);
         }
       }
     }
-  }
-
-  // helper function that checks if a file was submitted and uploads it if it
-  // is valid for bio thumbnails
-  function uploadBioThumbnail($prefix, $id) {
-    $name = $prefix."img";
-    if (isset($_FILES[$name]) && $_FILES[$name]["error"] == 0) {
-      if ($_FILES[$name]["type"] == "image/png") {
-        $dimension = getimagesize($_FILES[$name]["tmp_name"]);
-        if ($dimension[0] == 300 && $dimension[1] == 200) {
-          move_uploaded_file($_FILES[$name]["tmp_name"], "../layout/bio/".$id.".png");
+    // adding a new gallery photo
+    if ($_GET["edit"] == "gallery" && $_GET["page"] == "add") {
+      if (isset($_POST["header"]) && isset($_POST["content"]) && isset($_FILES["img"])) {
+        echo($_FILES["img"]["type"]);
+        if (verifyFileType("img", ["image/png"])) {
+          $query = "INSERT INTO galleryContent (header, content) VALUES (:hd, :cnt)";
+          $params = [":hd" => $_POST["header"], ":cnt" => $_POST["content"]];
+          dbPerform($query, $params);
+          $id = dbQuery("SELECT id FROM galleryContent ORDER BY edited DESC LIMIT 1")[0];
+          move_uploaded_file($_FILES["img"]["tmp_name"], "../layout/gallery/".$id.".png");
         }
       }
     }

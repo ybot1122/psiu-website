@@ -176,3 +176,7 @@ button.login {
 	padding: 10px;
 	min-height: 500px;
 }
+
+.custom-caption {
+	background: rgba(0, 0, 0, .7);
+}

@@ -31,16 +31,29 @@ input[type="submit"]:hover {
 
 .team-info {
 	margin: 0px;
+	width: 100%;
 }
 
 .team-upload {
 	width: 100%;
 }
 
-.delbox {
+.delbox, .infobox {
 	text-align: center;
 	border: 1px red dotted;
 	padding: 5px;
+	margin: 5px;
+	width: 100%;
+}
+
+.infobox {
+	text-align: left;
+	border-color: black;
+}
+
+.infobox ul {
+	margin: 0px;
+	padding-left: 20px;
 }
 
 .formLabel {

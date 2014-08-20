@@ -60,7 +60,9 @@
       } else if ($_GET["edit"] == "gallery") {
         // gallery management - main
         if ($_GET["page"] == "main") {
-
+          $content = dbQuery("SELECT id, header, content FROM galleryContent", [], true);
+          genGalleryMain($content);
+          return;
         }
         // gallery management - add
         if ($_GET["page"] == "add") {
@@ -69,7 +71,8 @@
         }
       }
     } ?>
-    <p>Welcome to the admin panel. The links are to the left.</p> <?PHP
+    <p>Welcome to the admin panel. The links are to the left.</p> 
+    <p>PLEASE NOTE: sometimes you need to refresh the page to see if image uploads have worked</p> <?PHP
   }
 
   // Helper function to do generation of static-content forms
@@ -82,6 +85,30 @@
       </fieldset> <?PHP
     } ?>
       <input type="submit" value="Submit!" />
+    </form> <?PHP
+  }
+
+  // helper function to generate gallery form
+  function genGalleryMain($content) { ?>
+    <form method="POST" action="cp/update.php?edit=<?= $_GET["edit"]; ?>&page=<?= $_GET["page"]; ?>"> <?PHP
+    foreach($content as $panel) { ?>
+      <div class="row">
+        <div class="col-md-3">
+          <img class="img-responsive img-rounded" src="layout/gallery/<?= $panel["id"]; ?>.png" />
+          <div class="delbox">
+            <span class="small">If this box is checked, this photo will be removed upon submit<br /></span>
+            <input name="<?= $panel["id"]; ?>-del" type="checkbox" />
+          </div>
+        </div>
+        <div class="col-md-9">
+          <fieldset>
+            <input name="<?= $panel["id"]; ?>-header" class="static-header" type="text" value="<?= $panel["header"]; ?>" />
+            <textarea name="<?= $panel["id"]; ?>-content" class="static-content"><?= $panel["content"]; ?></textarea>
+          </fieldset> 
+        </div>
+      </div> <?PHP
+    } ?>
+    <input type="submit" value="Submit!" />
     </form> <?PHP
   }
 
@@ -107,9 +134,15 @@
           <img class="img-responsive img-rounded" 
             src="layout/bio/<?= $content[$i]["id"]; ?>.png" alt="<?= $content[$i]["header"]; ?>" />
           <input name="<?= $content[$i]["id"]; ?>-img" class="team-upload" type="file">
-          <div class="delbox">
-            <span class="small">If this box is checked, this profile will be removed upon submit<br /></span>
-            <input name="<?= $content[$i]["id"]; ?>-del" type="checkbox" />
+          <div class="infobox">
+            <span class="small">
+              <ul>
+                <li>1.3 mb limit</li>
+                <li>.png format only</li>
+                <li>exactly 300px wide, 200px tall</li>
+                <li>USE COMMON SENSE</li>
+              </ul>
+            </span>
           </div>
         </div>
         <div class="col-md-9">
@@ -133,7 +166,12 @@
         </tr>
       </table>
       <textarea name="<?= $content[$i]["id"]; ?>-content" 
-        class="team-bio"><?= $content[$i]["content"]; ?></textarea></div></div><?PHP
+        class="team-bio"><?= $content[$i]["content"]; ?></textarea>
+      <div class="delbox">
+        <span class="small">If this box is checked, this profile will be removed upon submit<br /></span>
+        <input name="<?= $content[$i]["id"]; ?>-del" type="checkbox" />
+      </div>
+        </div></div><?PHP
     } ?>
     </fieldset> <?PHP
   }
@@ -148,6 +186,16 @@
           <img class="img-responsive img-rounded" 
             src="layout/bio/default.png" alt="thumbnail" />
           <input name="img" class="team-upload" type="file">
+          <div class="infobox">
+            <span class="small">
+              <ul>
+                <li>1.3 mb limit</li>
+                <li>.png format only</li>
+                <li>exactly 300px wide, 200px tall</li>
+                <li>USE COMMON SENSE</li>
+              </ul>
+            </span>
+          </div>
         </div>
         <div class="col-md-9">
           <table>
@@ -181,7 +229,7 @@
 
   // helper function to generate a form for uploading a new gallery image
   function genAddPhoto() { ?>
-    <form type="POST" action="cp/update.php?edit=gallery&page=add" enctype="multipart/form-data">
+    <form method="POST" action="cp/update.php?edit=gallery&page=add" enctype="multipart/form-data">
       <table>
         <tr>
           <td class="formLabel">Photo Title:</td>
@@ -195,7 +243,16 @@
           <td class="formLabel">Image Upload (jpg, jpeg, png allowed):</td>
           <td>
             <input name="img" class="team-upload" type="file" />
-            <span class="small">*Remember! Use common sense on what you choose to upload!</span>
+            <div class="infobox">
+              <span class="small">
+                <ul>
+                  <li>1.3 mb limit</li>
+                  <li>.png format only</li>
+                  <li>well be stretched to 500px width</li>
+                  <li>USE COMMON SENSE ON WHAT YOU UPLOAD</li>
+                </ul>
+              </span>
+            </div>
           </td>
         </tr>
         <tr>
