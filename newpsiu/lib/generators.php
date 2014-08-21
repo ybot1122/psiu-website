@@ -17,7 +17,7 @@
                       WHERE pid = :pid
                       LIMIT 1 OFFSET :off", [":pid"=>$pid, ":off"=>$offset]);
     if ($data != null) { ?>
-      <h3><?= htmlspecialchars_decode($data[0]); ?></h3>
+      <h2><?= htmlspecialchars_decode($data[0]); ?></h2>
       <div>
         <?= htmlspecialchars_decode($data[1]); ?>
         <?PHP if ($showDate == true): ?>
@@ -56,20 +56,13 @@
 
     if ($data != null) { 
       $info = explode("::", $data["info"]); ?>
-      <h3><?= $data["header"] ?></h3>
       <div class="col-md-3">
         <img class="img-responsive img-rounded" 
           src="layout/bio/<?= $data["id"]; ?>.png" alt="<?= $data["header"]; ?>" />
       </div>
       <div class="col-md-9">
+        <h3><?= $data["header"] ?></h3>
         <table>
-          <tr>
-            <th>Nickname</th>
-            <th>Hometown</th>
-            <th>Major</th>
-            <th>Phone</th>
-            <th>Email</th>
-          </tr>
           <tr> <?PHP
       if (count($info) != 5) { ?>
         <td colspan="5">Content Error! Info for this bio is malformed.</td> <?PHP
@@ -84,7 +77,6 @@
   </table>  
   <div>
     <?= $data["content"]; ?>
-    <p>last updated: <?= $data["edited"]; ?></p>
   </div></div></div> <?PHP
     } else { ?>
       <div class="col-md-9 col-md-offset-3">Database Error!</div></div> <?PHP
