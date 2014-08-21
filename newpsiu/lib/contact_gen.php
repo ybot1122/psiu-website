@@ -34,7 +34,7 @@
       $info = explode("::", $data["info"]); ?>
       <div class="tab-pane active" id="<?= $data[$i]["id"]; ?>">
         <div class="row narrow">
-          <div class="col-md-9 col-md-offset-3">
+          <div class="col-md-9 col-md-offset-3"> <?PHP
     }
   }
 ?>
