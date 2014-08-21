@@ -3,7 +3,7 @@
 
 	/*
 		generates html for a 'static' content panel. 
-				$data 	=> 	array of objects that contian the following properties:
+			$data 		=> 	object that contian the following properties:
 								"header": the content to be wrapped in <h2>
 								"content": the content to be put in the body of panel
 								"edited": timestamp of when this post was last updated
@@ -26,9 +26,9 @@
 
 	/* generates html for an error message, if a content panel messes up.
 			$message 	=> 	the code for the error message to display
-				0: malformed data passed to rendering function
-				1: database query failed
-				2: database query returned no results
+								0: malformed data passed to rendering function
+								1: database query failed
+								2: database query returned no results
 	*/
 
 	function errorContentRender($message) {
@@ -43,7 +43,5 @@
 			</div>
 		</div> <?PHP
 	}
-
-
 
 ?>

@@ -1,5 +1,6 @@
 <?PHP
 	// retrieval.php - wrapper functions that query the database and return results
+	// basically the API for getting data
 
 	/*
 		retrieve static content from database
@@ -26,4 +27,39 @@
 		return $result;
 	}
 
+	/*
+		retrieve bio data from database
+			$team 	=> 	array of captialized strings of team names
+							Rush", "Social", "Philanthropy"
+			$ec 	=> 	if set to true, ec members will not be grouped with their team
+		returns an associative array of associative arrays. The outer array is organized
+		by team name, the inner arrays are of individual members
+	*/
+	function getTeamContent($team, $ec) {
+		$teams = ["Rush", "Social", "Philanthropy"];
+		$result = [];
+		foreach ($team as $curr) {
+			if ($curr === "Ec") {
+				if ($ec === true) {
+					$query = "SELECT * FROM bioContent WHERE exec = 1";
+				} else {
+					$query = "SELECT * FROM bioContent WHERE exec = 1 AND team = -1";
+				}
+				$params = [];
+			} else {
+				$query = "SELECT * FROM bioContent WHERE team = :tid";
+				if ($ec === true) {
+					$query = $query." AND exec != -1";
+				}
+				if (($tid = array_search($curr, $teams)) !== -1) {
+					$params = [":tid" => $tid];
+				} else {
+					$result[$curr] = null;
+					continue;
+				}
+			}
+			$result[$curr] = dbQuery($query, $params, true);
+		}
+		return $result;
+	}
 ?>

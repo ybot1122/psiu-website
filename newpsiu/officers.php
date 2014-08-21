@@ -1,6 +1,8 @@
 <?PHP
 	include("lib/boilerplate.php");
+	include("lib/templates/bios.php");
 	$static = getStaticContent(["Officers"]);
+	$bios = getTeamContent(["Ec"], true);
 	displayHeader("Officers");
 	displayTopNav();
 ?>
@@ -10,9 +12,6 @@
 	</div>
 </div>
 <?PHP
-	$count = dbQuery("SELECT COUNT(id) FROM bioContent WHERE team = -1")[0];
-	for ($i = 0; $i < $count; $i++) {
-		genBio(true, $i);
-	}
+	bioFlatDisplayRender($bios["Ec"], false);
 	displayFooter();
 ?>

@@ -22,7 +22,7 @@
   // helper function to make tabs
   function makeTabs($data) {
     for ($i = 0; $i < count($data); $i++) { ?>
-      <li>
+      <li <?PHP if ($i == 0) { ?> class="active" <?PHP } ?>>
         <a href="#<?= $data[$i]["id"]; ?>" data-toggle="tab"><?= $data[$i]["header"]; ?></a>
       </li> <?PHP
     }
