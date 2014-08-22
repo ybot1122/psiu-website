@@ -62,4 +62,14 @@
 		}
 		return $result;
 	}
+
+	/*
+		retrieve gallery data from database
+
+		returns an associative arrays of associative arrays
+	*/
+	function getGalleryContent() {
+		$result = dbQuery("SELECT * FROM galleryContent", [], true);
+		return $result;
+	}
 ?>

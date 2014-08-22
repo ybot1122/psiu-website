@@ -1,7 +1,8 @@
 <?PHP
 	include("lib/boilerplate.php");
-	include("lib/gallery_gen.php");
+	include("lib/templates/gallery.php");
 	$static = getStaticContent(["Photos"]);
+	$photos = getGalleryContent();
 	displayHeader("Photos");
 	displayTopNav();
 ?>
@@ -15,11 +16,11 @@
 		<div id="carousel-photos" class="carousel slide" data-ride="carousel" data-interval="">
 			<!-- Indicators -->
 			<ol class="carousel-indicators">
-				<?= createSelectors(); ?>
+				<?= createSelectors(count($photos)); ?>
 			</ol>
 			<!-- Wrapper for slides -->
 			<div class="carousel-inner">
-				<?= createItems(); ?>
+				<?= createItems($photos); ?>
 			</div>
 			<!-- Controls -->
 			<a class="left carousel-control" href="#carousel-photos" data-slide="prev">
