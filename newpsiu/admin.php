@@ -1,6 +1,7 @@
 <?PHP
   include("lib/boilerplate.php");
   include("lib/lock.php");
+  include("cp/templates/forms.php");
   include("cp/parse.php");
   displayHeader("Admin Panel");
 ?>

@@ -1,4 +1,8 @@
 <?PHP
+	
+	// currently does all the work to do any sort of content update. 
+	// needs to be factored out
+
   session_start();
   include("../lib/lock.php");
   include("../lib/db.php");

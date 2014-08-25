@@ -3,7 +3,7 @@
 
 	/*
 		generates html for a 'static' content panel. 
-			$data 		=> 	object that contian the following properties:
+			$data 		=> 	object that contains the following properties:
 								"header": the content to be wrapped in <h2>
 								"content": the content to be put in the body of panel
 								"edited": timestamp of when this post was last updated
