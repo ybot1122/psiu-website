@@ -30,8 +30,9 @@
 	/*
 		retrieve bio data from database
 			$team 	=> 	array of captialized strings of team names
-							Rush", "Social", "Philanthropy"
-			$ec 	=> 	if set to true, ec members will not be grouped with their team
+							Rush", "Social", "Philanthropy", "Ec"
+			$ec 	=> 	if set to true, ec members will be grouped as EC,
+						regardless of their team
 		returns an associative array of associative arrays. The outer array is organized
 		by team name, the inner arrays are of individual members
 	*/
@@ -49,7 +50,7 @@
 			} else {
 				$query = "SELECT * FROM bioContent WHERE team = :tid";
 				if ($ec === true) {
-					$query = $query." AND exec != -1";
+					$query = $query." AND exec = 0";
 				}
 				if (($tid = array_search($curr, $teams)) !== -1) {
 					$params = [":tid" => $tid];
