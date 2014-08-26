@@ -22,7 +22,8 @@
 		if (isset($_FILES[$name]) && $_FILES[$name]["error"] == 0) {
 			if (verifyFileType($name, ["image/png"])) {
 				$dimension = getimagesize($_FILES[$name]["tmp_name"]);
-				if ($dimension[0] == 300 && $dimension[1] == 200) {
+				if (($dimension[0] >= 297 && $dimension[0] <= 303) 
+						&& ($dimension[1] >= 197 && $dimension[1] <= 203)) {
 					if (file_exists("../layout/bio/".$id.".png")) {
 						unlink("../layout/bio/".$id.".png");
 					}
