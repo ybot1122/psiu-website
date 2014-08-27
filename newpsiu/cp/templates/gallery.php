@@ -18,7 +18,7 @@
 					<td><input name="content" type="text" class="team-header" /></td>
 				</tr>
 				<tr>
-					<td class="formLabel">Image Upload (jpg, jpeg, png allowed):</td>
+					<td class="formLabel">Image Upload:</td>
 					<td>
 					<input name="img" class="team-upload" type="file" />
 					<div class="infobox">

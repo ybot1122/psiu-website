@@ -57,8 +57,8 @@ input[type="submit"]:hover {
 }
 
 .formLabel {
-	width: 20%;
-	text-align: right;
+	width: 5%;
+	text-align: left;
 }
 
 table, td, tr {

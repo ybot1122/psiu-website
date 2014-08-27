@@ -79,13 +79,15 @@
 					</table>
 					<textarea name="<?= $pref; ?>content" 
 							class="team-bio"><?= $content["content"]; ?></textarea>
-					<?= buildRadios($pref, $content); ?>
+					<?= buildRadios($pref, $content); ?> <?PHP
+					if ($add !== true) { ?>
 					<div class="delbox">
 						<span class="small">
 							If this box is checked, this profile will be removed upon submit<br />
 						</span>
 						<input name="<?= $pref; ?>del" type="checkbox" />
-					</div>
+					</div> <?PHP
+					} ?>
 				</div>
 			</div> <?PHP       	
 		} ?>
