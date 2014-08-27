@@ -38,7 +38,26 @@
 		}
 	}
 
-	header("Location: ../admin.php?edit=".$_GET["edit"]."&page=".$_GET["page"]);
+	//header("Location: ../admin.php?edit=".$_GET["edit"]."&page=".$_GET["page"]);
+
+	/*
+		returns an array of the POST form values associated with the provided id
+			$prefix 	=>	value representing the unique identifier of this set of data
+			$fields 	=>	array of strings representing the keys expected in the returned
+							array
+	*/
+
+	function getInputByPrefix($prefix, $fields) {
+		$result = [];
+		foreach ($fields as $str) {
+			if (isset($_POST[$prefix.$str])) {
+				$result[$str] = $_POST[$prefix.$str];
+			} else {
+				$result[$str] = null;
+			}
+		}
+		return $result;
+	}
 
 	function updateStaticContent($pid) {
 		$ids = dbQuery("SELECT id FROM standardContent WHERE pid = :pid", [":pid"=>$pid], true);
@@ -46,10 +65,11 @@
 				SET header = :hd, content = :cnt
 				WHERE id = :id";
 		foreach($ids as $curr) {
+			$input = getInputByPrefix($curr["id"]."-", ["header", "content"]);
 			$params = [
-				":hd"=>$_POST[$curr["id"]."-header"],
-				":cnt"=>$_POST[$curr["id"]."-content"],
-				":id"=>$curr["id"]
+				":hd"	=>	$input["header"],
+				":cnt"	=>	$input["content"],
+				":id"	=>	$curr["id"]
 			];
 			dbPerform($query, $params);
 		}
@@ -58,15 +78,17 @@
 	function addTeamMember() {
 		$query = "INSERT INTO bioContent (team, exec, header, content, info)
 				VALUES (:tid, :exec, :hd, :cnt, :info)";
-		$tid = $_POST["team"];
-		$ec = (isset($_POST["ec"])) ? 1 : 0;
-		$info = $_POST["nickname"]."::".$_POST["hometown"]."::".$_POST["major"].
-				"::".$_POST["phone"]."::".$_POST["email"];
+		$input = getInputByPrefix("", ["team", "ec", "nickname", "hometown", "major", "phone",
+				"email","header", "content"]);
+		$tid = $input["team"];
+		$ec = (isset($input["ec"])) ? 1 : 0;
+		$info = $input["nickname"]."::".$input["hometown"]."::".$input["major"].
+				"::".$input["phone"]."::".$input["email"];
 		$params = [
 			":tid" => $tid,
 			":exec" => $ec,
-			":hd" => $_POST["header"],
-			":cnt" => $_POST["content"],
+			":hd" => $input["header"],
+			":cnt" => $input["content"],
 			":info" => $info
 		];
 		dbPerform($query, $params);
@@ -85,17 +107,18 @@
 				// remove
 				dbPerform("DELETE FROM bioContent WHERE id = :id", [":id" => $curr["id"]]);
 			} else {
-				$info = $_POST[$curr["id"]."-nickname"]."::".$_POST[$curr["id"]."-hometown"]."::".
-						$_POST[$curr["id"]."-major"]."::".$_POST[$curr["id"]."-phone"]."::".
-						$_POST[$curr["id"]."-email"];
-				$ec = (isset($_POST[$curr["id"]."-ec"])) ? 1 : 0;
+				$input = getInputByPrefix($curr["id"]."-", ["nickname", "hometown", "major",
+						"phone", "email", "ec", "header", "content", "team"]);
+				$info = $input["nickname"]."::".$input["hometown"]."::".$input["major"]."::".
+						$input["phone"]."::".$input["email"];
+				$ec = ($input["ec"] != null) ? 1 : 0;
 				$params = [
-					":hd"=>$_POST[$curr["id"]."-header"],
-					":cnt"=>$_POST[$curr["id"]."-content"],
-					":info"=>$info,
-					":id"=>$curr["id"],
-					":team"=>$_POST[$curr["id"]."-team"],
-					":exec"=>$ec
+					":hd"	=>	$input["header"],
+					":cnt"	=>	$input["content"],
+					":info"	=>	$info,
+					":id"	=>	$curr["id"],
+					":team"	=>	$input["team"],
+					":exec"	=>	$ec
 				];
 				dbPerform($query, $params);
 				uploadBioThumbnail($curr["id"]."-", $curr["id"]);
@@ -104,10 +127,11 @@
 	}
 
 	function addPhoto() {
-		if (isset($_POST["header"]) && isset($_POST["content"]) && isset($_FILES["img"])) {
+		$input = getInputByPrefix("", ["header", "content"]);
+		if ($input["header"] !== null && $input["content"] !== null && isset($_FILES["img"])) {
 			if (verifyFileType("img", ["image/png"])) {
 				$query = "INSERT INTO galleryContent (header, content) VALUES (:hd, :cnt)";
-				$params = [":hd" => $_POST["header"], ":cnt" => $_POST["content"]];
+				$params = [":hd" => $input["header"], ":cnt" => $input["content"]];
 				dbPerform($query, $params);
 				$id = dbQuery("SELECT id FROM galleryContent ORDER BY edited DESC LIMIT 1")[0];
 				move_uploaded_file($_FILES["img"]["tmp_name"], "../layout/gallery/".$id.".png");
@@ -121,15 +145,18 @@
 				SET header = :hd, content = :cnt
 				WHERE id = :id";
 		foreach($ids as $curr) {
-			if (isset($_POST[$curr["id"]."-del"])) {
+			$input = getInputByPrefix($curr["id"]."-", ["header", "content", "del"]);
+			if ($input["del"] !== null) {
 				dbPerform("DELETE FROM galleryContent WHERE id = :id", [":id" => $curr["id"]]);
-				if (file_exists("../layout/gallery/".$id.".png")) {
-					unlink("../layout/gallery/".$id.".png");
+				if (file_exists("../layout/gallery/".$curr["id"].".png")) {
+					unlink("../layout/gallery/".$curr["id"].".png");
 				}
 			} else {
-				$params = [":hd"=>$_POST[$curr["id"]."-header"],
-				":cnt"=>$_POST[$curr["id"]."-content"],
-				":id"=>$curr["id"]];
+				$params = [
+					":hd"	=>	$input["header"],
+					":cnt"	=>	$input["content"],
+					":id"	=>	$curr["id"]
+				];
 				dbPerform($query, $params);
 			}
 		}
