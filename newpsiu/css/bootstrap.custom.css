@@ -36,6 +36,22 @@ td, th {
 	width: 20%;
 }
 
+.btn-faq {
+	width: 100%;
+	text-align: center;
+	border: 1px silver solid;
+}
+
+.btn-faq:hover {
+	border-color: white;
+}
+
+.faq {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .container {
 	margin-top: 10px;
 	margin-bottom: 10px;

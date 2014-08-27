@@ -38,7 +38,7 @@
 		}
 	}
 
-	//header("Location: ../admin.php?edit=".$_GET["edit"]."&page=".$_GET["page"]);
+	header("Location: ../admin.php?edit=".$_GET["edit"]."&page=".$_GET["page"]);
 
 	/*
 		returns an array of the POST form values associated with the provided id
