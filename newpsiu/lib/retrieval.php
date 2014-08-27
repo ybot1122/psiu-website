@@ -18,7 +18,7 @@
 			}
 			$params[":".$page] = $id;
 			if (count($params) === count($pagename)) {
-				$query = $query."pid = :".$page." ORDER BY `pid` ASC , `id` ASC";
+				$query = $query."pid = :".$page." ORDER BY `pid` ASC, `id` ASC";
 			} else {
 				$query = $query."pid = :".$page." OR ";
 			}
