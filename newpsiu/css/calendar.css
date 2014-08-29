@@ -1,0 +1,51 @@
+#event-selectors {
+	position: static;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+
+.carousel-events {
+	height: 200px;
+}
+
+#event-selectors li {
+	border-color: black;
+	text-indent: 0px;
+	width: 200px;
+	height: 30px;
+	line-height: 30px;
+}
+
+#event-selectors .active {
+	font-weight: bold;
+	background: silver;
+}
+
+#event-control {
+	background: none;
+	color: black;
+	text-shadow: none;
+	line-height: 50px;
+	height: 50px;
+	opacity: 1.0;
+}
+
+#event-info {
+	margin-top: 20px;
+}
+
+.event-details {
+	
+}
+
+.no-event {
+	text-align: center;
+	padding: 10px;
+}
+
+.calendar-tabs {
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+}

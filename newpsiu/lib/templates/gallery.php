@@ -7,7 +7,7 @@
 	*/
 
 	function createSelectors($num) { ?>
-		<li data-target="#carousel-photos" data-slide-to="0"></li> <?PHP
+		<li class="active" data-target="#carousel-photos" data-slide-to="0"></li> <?PHP
 		for ($i = 1; $i <= $num; $i++) { ?>
 			<li data-target="#carousel-photos" data-slide-to="<?= $i ?>"></li> <?PHP
 		}
