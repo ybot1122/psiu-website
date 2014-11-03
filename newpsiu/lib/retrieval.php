@@ -73,4 +73,16 @@
 		$result = dbQuery("SELECT * FROM galleryContent", [], true);
 		return $result;
 	}
+
+	/*
+		retrieve all events that start on the given date or after
+
+		the date should be a string of the following format:
+		mm/dd/yyyy
+	*/
+	function getEvents($startDate) {
+		$result = dbQuery("SELECT * FROM events WHERE date >= :d",
+			[":d" => $startDate], true);
+		return $result;
+	}
 ?>

@@ -41,7 +41,13 @@
 					return;
 				}
 			} else if ($_GET["edit"] == "events") {
-				// no calendar yet
+				include("templates/events.php");
+				$today = date("Y/m/d");
+				$data = getEvents($today); ?>
+				<form method="POST" action="cp/calUpdate.php">
+					<?= activeEventFormRender($data); ?>
+				</form> <?PHP
+				return;
 			} else if ($_GET["edit"] == "teams") {
 				include("templates/members.php");
 				// member management - main
