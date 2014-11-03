@@ -41,6 +41,7 @@
 					return;
 				}
 			} else if ($_GET["edit"] == "events") {
+				// no calendar yet
 			} else if ($_GET["edit"] == "teams") {
 				include("templates/members.php");
 				// member management - main
