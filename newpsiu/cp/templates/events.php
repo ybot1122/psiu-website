@@ -6,7 +6,8 @@
 		parses and produces form html for each
 	*/
 
-	function activeEventFormRender($content) {
+	function activeEventFormRender($content) { ?>
+		<form method="POST" action="cp/calUpdate.php?action=update"> <?PHP
 		foreach($content as $panel) {
 			$id = $panel["id"]; ?>
 			<div>
@@ -21,6 +22,19 @@
 					<input name="<?= $panel["id"]; ?>-del" type="checkbox" />
 				</div>
 			</div> <?PHP
-		}
+		} ?>
+			<input type="submit" value="Submit Event Updates" />
+		</form> <?PHP
+	}
+
+	function addEventFormRender() { ?>
+		<form method="POST" action="cp/calUpdate.php?action=add">
+			<div>
+				<input type="text" class="team-header" name="title" value="Event Title" />
+				<textarea name="desc" class="team-header">Event Description</textarea>
+				<p>DATE SELECTOR HERE</p>
+				<input type="submit" value="Add This Event" />
+			</div>
+		</form> <?PHP
 	}
 ?>

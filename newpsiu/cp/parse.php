@@ -43,10 +43,9 @@
 			} else if ($_GET["edit"] == "events") {
 				include("templates/events.php");
 				$today = date("Y/m/d");
-				$data = getEvents($today); ?>
-				<form method="POST" action="cp/calUpdate.php">
-					<?= activeEventFormRender($data); ?>
-				</form> <?PHP
+				$data = getEvents($today);
+				activeEventFormRender($data);
+				addEventFormRender();
 				return;
 			} else if ($_GET["edit"] == "teams") {
 				include("templates/members.php");
