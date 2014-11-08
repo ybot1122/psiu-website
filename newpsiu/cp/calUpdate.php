@@ -20,6 +20,41 @@
 		$query = "INSERT INTO events (title, description, date) VALUES (:ti, :dsc, :dte)";
 		$params = [":ti" => $_POST["title"], ":dsc" => $_POST["desc"], ":dte" => $date];
 		dbPerform($query, $params);
+	} else if ($_GET["action"] == "update") {
+		// retrive all IDs of events from today onward
+		$ids = dbQuery("SELECT id FROM events WHERE date >= CURDATE()", [], true);
+		$updateQuery = "UPDATE events 
+				SET title = :hd, description = :cnt, date = :dte
+				WHERE id = :id";
+		$delQuery = "DELETE FROM events WHERE id = :id";
+		// iterate through events and make updates
+		foreach($ids as $curr) {
+			$prefix = $curr["id"]."-";
+			if (isset($_POST[$prefix."del"])) {
+				dbPerform($delQuery, [":id" => $curr["id"]]);
+			} else {
+				$input = getInputByPrefix($curr["id"]."-", ["title", "desc", "date"]);
+				$params = [
+					":hd"	=>	$input["title"],
+					":cnt"	=>	$input["desc"],
+					":dte"  =>  $input["date"],
+					":id"	=>	$curr["id"]
+				];
+				dbPerform($updateQuery, $params);
+			}
+		}
+	}
+
+	function getInputByPrefix($prefix, $fields) {
+		$result = [];
+		foreach ($fields as $str) {
+			if (isset($_POST[$prefix.$str])) {
+				$result[$str] = $_POST[$prefix.$str];
+			} else {
+				$result[$str] = "No Content Available";
+			}
+		}
+		return $result;
 	}
 
 	header("Location: ../admin.php?edit=events&page=main");

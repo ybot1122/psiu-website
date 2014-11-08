@@ -14,7 +14,7 @@
 				<input type="text" class="team-header" 
 					name="<?= $id; ?>-title" value="<?= $panel["title"]; ?>" />
 				<textarea name="<?= $id; ?>-desc" class="team-header"><?= $panel["description"]; ?></textarea>
-				<p>Date: <?= $panel["date"]; ?></p>
+				<input type="text" class="team-header" name="<?= $id; ?>-date" value="<?= $panel["date"]; ?>" />
 				<div class="delbox">
 					<span class="small">
 						If this box is checked, this event will be marked for deletion<br />
