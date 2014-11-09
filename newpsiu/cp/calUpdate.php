@@ -1,11 +1,10 @@
 <?PHP
-
 	// cp/calUpdate.php - page to process event management forms specifically
 
 	session_start();
 	include("../lib/lock.php");
 	include("../lib/db.php");
-	include("upload.php");
+	include("cp_func.php");
 
 	if (!isset($_GET["action"])) {
 		header("Location: ../login.php");
@@ -23,16 +22,15 @@
 	} else if ($_GET["action"] == "update") {
 		// retrive all IDs of events from today onward
 		$ids = dbQuery("SELECT id FROM events WHERE date >= CURDATE()", [], true);
-		$updateQuery = "UPDATE events 
-				SET title = :hd, description = :cnt, date = :dte
-				WHERE id = :id";
-		$delQuery = "DELETE FROM events WHERE id = :id";
 		// iterate through events and make updates
 		foreach($ids as $curr) {
 			$prefix = $curr["id"]."-";
 			if (isset($_POST[$prefix."del"])) {
-				dbPerform($delQuery, [":id" => $curr["id"]]);
+				deleteById("events", $curr["id"]);
 			} else {
+				$updateQuery = "UPDATE events 
+					SET title = :hd, description = :cnt, date = :dte
+					WHERE id = :id";
 				$input = getInputByPrefix($curr["id"]."-", ["title", "desc", "date"]);
 				$params = [
 					":hd"	=>	$input["title"],
@@ -43,18 +41,6 @@
 				dbPerform($updateQuery, $params);
 			}
 		}
-	}
-
-	function getInputByPrefix($prefix, $fields) {
-		$result = [];
-		foreach ($fields as $str) {
-			if (isset($_POST[$prefix.$str])) {
-				$result[$str] = $_POST[$prefix.$str];
-			} else {
-				$result[$str] = "No Content Available";
-			}
-		}
-		return $result;
 	}
 
 	header("Location: ../admin.php?edit=events&page=main");
