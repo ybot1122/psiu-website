@@ -12,13 +12,15 @@
 	} 
 
 	if ($_GET["action"] == "add" && isset($_POST["title"]) 
-	&& isset($_POST["desc"])) {
+	&& isset($_POST["desc"]) && isset($_POST["month"]) && isset($_POST["day"])) {
 		// add a new event to our database
 		// TODO: check if the specified date is valid
-		$date = "2014-11-27";
-		$query = "INSERT INTO events (title, description, date) VALUES (:ti, :dsc, :dte)";
-		$params = [":ti" => $_POST["title"], ":dsc" => $_POST["desc"], ":dte" => $date];
-		dbPerform($query, $params);
+		if (checkdate($_POST["month"], $_POST["day"], date("Y"))) {
+			$date = date("Y") . "-" . $_POST["month"] . "-" . $_POST["day"];
+			$query = "INSERT INTO events (title, description, date) VALUES (:ti, :dsc, :dte)";
+			$params = [":ti" => $_POST["title"], ":dsc" => $_POST["desc"], ":dte" => $date];
+			dbPerform($query, $params);
+		}
 	} else if ($_GET["action"] == "update") {
 		// retrive all IDs of events from today onward
 		$ids = dbQuery("SELECT id FROM events WHERE date >= CURDATE()", [], true);
