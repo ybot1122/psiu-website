@@ -1,8 +1,8 @@
 <?PHP
 	include("lib/boilerplate.php");
-	include("lib/MyCalendar.php");
+	include("lib/templates/events.php");
 	$static = getStaticContent(["Calendar"]);
-	$calendar = new MyCalendar();
+	$data = getEvents();
 	displayHeader("Calendar"); ?>
 	<link rel="stylesheet" href="css/calendar.css"> <?PHP
 	displayTopNav();
@@ -14,8 +14,23 @@
 </div>
 <div class="row">
 	<div class="col-md-12">
-		<?= $calendar->calendarTabsRender(); ?>
-		<?= $calendar->calendarCarouselRender(); ?>
+		<div id="carousel-events" class="carousel slide" data-ride="carousel" data-interval="">
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+				<?= createSelectors(count($data)); ?>
+			</ol>
+			<!-- Wrapper for slides -->
+			<div class="carousel-inner">
+				<?= renderEvents($data); ?>
+			</div>
+			<!-- Controls -->
+			<a class="left carousel-control" href="#carousel-events" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left"></span>
+			</a>
+			<a class="right carousel-control" href="#carousel-events" data-slide="next">
+			<span class="glyphicon glyphicon-chevron-right"></span>
+			</a>
+		</div>
 	</div>
 </div>
 <?PHP

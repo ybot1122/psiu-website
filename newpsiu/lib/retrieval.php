@@ -80,9 +80,10 @@
 		the date should be a string of the following format:
 		mm/dd/yyyy
 	*/
-	function getEvents($startDate) {
-		$result = dbQuery("SELECT * FROM events WHERE date >= :d",
-			[":d" => $startDate], true);
-		return $result;
+	function getEvents() {
+		$data = dbQuery("SELECT * FROM events
+			WHERE date BETWEEN NOW() - INTERVAL 4 MONTH AND NOW() + INTERVAL 4 MONTH
+			ORDER BY date ASC", [], true);
+		return $data;
 	}
 ?>
