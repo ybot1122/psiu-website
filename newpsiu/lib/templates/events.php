@@ -1,16 +1,16 @@
 <?PHP
 	function renderEvents($data) {
 		for ($i = 0; $i < count($data); $i++) {
+			$dateString = date("M j, Y", strtotime($data[$i]["date"]));
 			if ($i == 0) { ?>
 				<div class="item active"> <?PHP
 			} else { ?>
 				<div class="item"> <?PHP
 			} ?>
-				<div style="width: 300px; border: 1px black solid; margin-left: auto; margin-right: auto;">
-				<h3><?= $data[$i]["title"]; ?></h3>
+				<div>
+				<h3><?= $data[$i]["title"]; ?> - <?= $dateString; ?></h3>
 				<p>
 					<?= $data[$i]["description"]; ?>
-					<span><?= $data[$i]["date"]; ?></span>
 				</p>
 				</div>
 			</div> <?PHP

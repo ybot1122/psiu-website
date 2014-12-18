@@ -217,3 +217,32 @@ button.login {
 	margin-right: auto;
 	border: 1px black solid;
 }
+
+#carousel-events {
+	width: 70%; 
+	border: 1px black solid;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+#carousel-events span {
+	font-size: 14px;
+	font-style: italic;
+}
+
+#carousel-events .carousel-indicators {
+	position: relative;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	height: 10px;
+	bottom: 0px;
+}
+
+#carousel-events .carousel-indicators li {
+	border-color: black;
+}
+
+#carousel-events .carousel-indicators .active {
+	background: black;
+}

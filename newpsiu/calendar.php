@@ -16,7 +16,7 @@
 	<div class="col-md-12">
 		<div id="carousel-events" class="carousel slide" data-ride="carousel" data-interval="">
 			<!-- Indicators -->
-			<ol class="carousel-indicators" style="background: black;">
+			<ol class="carousel-indicators">
 				<?= createSelectors(count($data)); ?>
 			</ol>
 			<!-- Wrapper for slides -->
