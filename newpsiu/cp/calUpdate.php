@@ -33,14 +33,17 @@
 				$updateQuery = "UPDATE events 
 					SET title = :hd, description = :cnt, date = :dte
 					WHERE id = :id";
-				$input = getInputByPrefix($curr["id"]."-", ["title", "desc", "date"]);
-				$params = [
-					":hd"	=>	$input["title"],
-					":cnt"	=>	$input["desc"],
-					":dte"  =>  $input["date"],
-					":id"	=>	$curr["id"]
-				];
-				dbPerform($updateQuery, $params);
+				$input = getInputByPrefix($curr["id"]."-", ["title", "desc", "month", "day"]);
+				if (checkdate($input["month"], $input["day"], date("Y"))) {
+					$date = date("Y") . "-" . $input["month"] . "-" . $input["day"];
+					$params = [
+						":hd"	=>	$input["title"],
+						":cnt"	=>	$input["desc"],
+						":dte"  =>  $date,
+						":id"	=>	$curr["id"]
+					];
+					dbPerform($updateQuery, $params);
+				}
 			}
 		}
 	}
