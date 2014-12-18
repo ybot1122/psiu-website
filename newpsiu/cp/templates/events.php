@@ -9,12 +9,30 @@
 	function activeEventFormRender($content) { ?>
 		<form method="POST" action="cp/calUpdate.php?action=update"> <?PHP
 		foreach($content as $panel) {
+			$date = date_parse($panel["date"]);
 			$id = $panel["id"]; ?>
 			<div>
 				<input type="text" class="team-header" 
 					name="<?= $id; ?>-title" value="<?= $panel["title"]; ?>" />
 				<textarea name="<?= $id; ?>-desc" class="team-header"><?= $panel["description"]; ?></textarea>
-				<input type="text" class="team-header" name="<?= $id; ?>-date" value="<?= $panel["date"]; ?>" />
+				<select name="<?= $id; ?>-month"> <?PHP
+					for ($i = 1; $i <= 12; $i++) {
+						if ($i == $date["month"]) { ?>
+							<option value="<?= $i; ?>" selected><?= $i; ?></option> <?PHP
+						} else { ?>
+							<option value="<?= $i; ?>"><?= $i; ?></option> <?PHP
+						}
+					} ?>
+				</select>
+				<select name="<?= $id; ?>-day"> <?PHP
+					for ($i = 1; $i <= 31; $i++) {
+						if ($i == $date["day"]) { ?>
+							<option value="<?= $i; ?>" selected><?= $i; ?></option> <?PHP
+						} else { ?>
+							<option value="<?= $i; ?>"><?= $i; ?></option> <?PHP
+						}
+					} ?>
+				</select> <?= date("Y"); ?>
 				<div class="delbox">
 					<span class="small">
 						If this box is checked, this event will be marked for deletion<br />
