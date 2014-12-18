@@ -6,19 +6,24 @@
 			} else { ?>
 				<div class="item"> <?PHP
 			} ?>
+				<div style="width: 300px; border: 1px black solid; margin-left: auto; margin-right: auto;">
 				<h3><?= $data[$i]["title"]; ?></h3>
 				<p>
 					<?= $data[$i]["description"]; ?>
 					<span><?= $data[$i]["date"]; ?></span>
 				</p>
+				</div>
 			</div> <?PHP
 		}
 	}
 
-	function createSelectors($num) { ?>
-		<li class="active" data-target="#carousel-events" data-slide-to="0"></li> <?PHP
-		for ($i = 1; $i <= $num; $i++) { ?>
-			<li data-target="#carousel-events" data-slide-to="<?= $i ?>"></li> <?PHP
+	function createSelectors($num) {
+		for ($i = 0; $i < $num; $i++) { 
+			if ($i == 0) { ?>
+				<li data-target="#carousel-events" data-slide-to="<?= $i ?>" class="active"></li> <?PHP
+			} else { ?>
+				<li data-target="#carousel-events" data-slide-to="<?= $i ?>"></li> <?PHP
+			}
 		}
 	}
 ?>
