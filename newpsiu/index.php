@@ -1,7 +1,9 @@
 <?PHP
 	// function to generate regular content
 	include("lib/boilerplate.php");
+	include("lib/templates/events.php");
 	$data = getStaticContent(["Home"]);
+	$events = getEvents();
 	displayHeader("Home");
 	displayTopNav();
 ?>
@@ -18,8 +20,9 @@
 		<!-- row 1, events -->
 		<div class="row narrow">
 			<div class="col-md-12">
-				<h3>Upcoming Events</h3>
+				<h2>Upcoming Events</h2>
 				<div class="btn-group-lg events">
+					<?= eventDropdown($events); ?>
 				</div>
 			</div>
 		</div>

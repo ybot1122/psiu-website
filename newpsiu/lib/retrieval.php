@@ -82,7 +82,7 @@
 	*/
 	function getEvents() {
 		$data = dbQuery("SELECT * FROM events
-			WHERE date BETWEEN NOW() - INTERVAL 4 MONTH AND NOW() + INTERVAL 4 MONTH
+			WHERE date >= NOW()
 			ORDER BY date ASC", [], true);
 		return $data;
 	}

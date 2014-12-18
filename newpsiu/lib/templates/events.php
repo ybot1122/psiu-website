@@ -26,4 +26,19 @@
 			}
 		}
 	}
+
+	function eventDropdown($events) {
+		$limit = min(count($events), 5);
+		for ($i = 0; $i < $limit; $i++) { 
+			$dateString = date("M j, Y", strtotime($events[$i]["date"]));
+			?>
+			<button type="button" class="btn btn-default btn-event btn-block" 
+					data-toggle="collapse" data-target="#event-<?= $i; ?>">
+				<?= $dateString; ?>: <?= $events[$i]["title"]; ?>
+			</button>
+			<div id="event-<?= $i; ?>" class="collapse">
+				<?= $events[$i]["description"]; ?>
+			</div> <?PHP
+		}
+	}
 ?>

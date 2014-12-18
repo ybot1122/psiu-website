@@ -14,10 +14,20 @@
 				>> Manage Events</h3> <?PHP
 				return;
 			} else if ($_GET["edit"] == "teams") { ?>
-				>> Manage Team Members</h3> <?PHP
+				>> Manage Team Members <?PHP
+				if ($_GET["page"] == "main") { ?>
+					>> Edit Current Members</h3> <?PHP
+				} else if ($_GET["page"] == "add") { ?>
+					>> Add New Member</h3> <?PHP
+				}
 				return;
 			} else if ($_GET["edit"] == "gallery") { ?>
-				>> Manage Photo Gallery</h3> <?PHP
+				>> Manage Photo Gallery <?PHP
+				if ($_GET["page"] == "main") { ?>
+					>> Edit Current Photos</h3> <?PHP
+				} else if ($_GET["page"] == "add") { ?>
+					>> Add New Photo</h3> <?PHP
+				}
 			}
 		} ?>
 		</h3> <?PHP
@@ -42,10 +52,13 @@
 				}
 			} else if ($_GET["edit"] == "events") {
 				include("templates/events.php");
-				$today = date("Y/m/d");
-				$data = getEvents($today);
-				activeEventFormRender($data);
-				addEventFormRender();
+				if ($_GET["page"] == "main") {
+					$today = date("Y/m/d");
+					$data = getEvents();
+					activeEventFormRender($data);
+				} else if ($_GET["page"] == "add") {
+					addEventFormRender();
+				}
 				return;
 			} else if ($_GET["edit"] == "teams") {
 				include("templates/members.php");

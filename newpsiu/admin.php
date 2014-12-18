@@ -26,11 +26,12 @@
       <li>
         <h4>Manage Events</h4>
         <ul>
-          <li><a href="admin.php?edit=events&page=main">Events</a></li>
+          <li><a href="admin.php?edit=events&page=main">Update Events</a></li>
+          <li><a href="admin.php?edit=events&page=add">Add New Event</a></li>
         </ul>
       </li>
       <li>
-        <h4>Manage EC/Team Members</h4>
+        <h4>Manage Team Members</h4>
         <ul>
           <li><a href="admin.php?edit=teams&page=main">Edit Current Members</a></li>
           <li><a href="admin.php?edit=teams&page=add">Add New Member</a></li>
