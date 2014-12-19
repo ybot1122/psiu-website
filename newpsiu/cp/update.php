@@ -76,6 +76,9 @@
 	}
 	
 	function addTeamMember() {
+		/*
+			
+		*/
 		$query = "INSERT INTO bioContent (team, exec, header, content, info)
 				VALUES (:tid, :exec, :hd, :cnt, :info)";
 		$input = getInputByPrefix("", ["team", "ec", "nickname", "hometown", "major", "phone",

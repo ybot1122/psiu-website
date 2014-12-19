@@ -17,10 +17,11 @@
 				<textarea name="<?= $id; ?>-desc" class="team-header"><?= $panel["description"]; ?></textarea>
 				<select name="<?= $id; ?>-month"> <?PHP
 					for ($i = 1; $i <= 12; $i++) {
+						$monthString = date('F', mktime(0, 0, 0, $i, 10));
 						if ($i == $date["month"]) { ?>
-							<option value="<?= $i; ?>" selected><?= $i; ?></option> <?PHP
+							<option value="<?= $i; ?>" selected><?= $monthString; ?></option> <?PHP
 						} else { ?>
-							<option value="<?= $i; ?>"><?= $i; ?></option> <?PHP
+							<option value="<?= $i; ?>"><?= $monthString; ?></option> <?PHP
 						}
 					} ?>
 				</select>
@@ -51,8 +52,10 @@
 				<input type="text" class="team-header" name="title" value="Event Title" />
 				<textarea name="desc" class="team-header">Event Description</textarea>
 				<select name="month"> <?PHP
-					for ($i = 1; $i <= 12; $i++) { ?>
-							<option value="<?= $i; ?>"><?= $i; ?></option> <?PHP
+					for ($i = 1; $i <= 12; $i++) { 
+						$monthString = date('F', mktime(0, 0, 0, $i, 10));
+						?>
+							<option value="<?= $i; ?>"><?= $monthString; ?></option> <?PHP
 					} ?>
 				</select>
 				<select name="day"> <?PHP

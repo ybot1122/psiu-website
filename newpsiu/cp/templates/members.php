@@ -131,7 +131,11 @@
 		creating the radio buttons and checkbox indicating team and ec position
 	*/
 
-	function buildRadios($pref, $content) {
+	function buildRadios($pref, $content) { ?>
+		<select name="<?= $pref; ?>team">
+		<option value="0">Test</option>
+		</select> <?PHP
+		/*
 		$teams = ["None", "Rush", "Social", "Philanthropy"];
 		$i = -1;
 		while ($i < 3) { ?>
@@ -147,5 +151,6 @@
 				checked <?PHP
 			} ?>
 		>EC Member? <?PHP
+		*/
 	}
 ?>
