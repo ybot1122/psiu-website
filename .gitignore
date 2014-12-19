@@ -2,3 +2,5 @@
 *.zip
 *.png
 newpsiu/layout/**
+newpsiu/layout/bio/**
+newpsiu/layout/bio/
