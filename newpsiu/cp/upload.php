@@ -32,5 +32,6 @@
 				}
 			}
 		}
+		copy("../layout/bio/default.png", "../layout/bio/".$id.".png");
 	}
 ?>
