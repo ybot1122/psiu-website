@@ -104,7 +104,7 @@
 		foreach($ids as $curr) {
 			// if marked for removal, delete it
 			if (isset($_POST[$curr["id"]."-del"])) {
-				// remove
+				unlink("../layout/bio/".$curr["id"].".png");
 				dbPerform("DELETE FROM bioContent WHERE id = :id", [":id" => $curr["id"]]);
 			} else {
 				$input = getInputByPrefix($curr["id"]."-", ["nickname", "hometown", "major",
