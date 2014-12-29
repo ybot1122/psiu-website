@@ -29,6 +29,7 @@
 					}
 					move_uploaded_file($_FILES[$name]["tmp_name"],
 						"../layout/bio/".$id.".png");
+                    return;
 				}
 			}
 		}
