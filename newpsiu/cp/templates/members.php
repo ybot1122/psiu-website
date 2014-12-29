@@ -16,7 +16,6 @@
 							"content": content to be wrapped in a <div>
 							"info": properly formatted string to be rendered into a <table>
 	*/
-
 	function memberFormRender($add, $data) {
 		if ($add === true) {
 			$data = [[
@@ -37,7 +36,7 @@
 			<div class="row">
 				<div class="col-md-3">
 					<img class="img-responsive img-rounded" 
-							src="layout/bio/<?= $content["id"]; ?>.png" 
+							src="layout/bio/<?= $content["id"]; ?>.png?MT=<?= rand(); ?>"
 							alt="<?= $content["header"]; ?>" />
 					<input name="<?= $pref; ?>img" class="team-upload" type="file">
 					<div class="infobox">
@@ -102,7 +101,6 @@
 							2nd level array contains each info about each member
 							3rd level array contains the same keys as specified above
 	*/
-
 	function tabbedMemberFormRender($data) { ?>
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#exec" data-toggle="tab">Exec</a></li>
@@ -130,27 +128,40 @@
 		private helper function for building the member editing form. responsible for
 		creating the radio buttons and checkbox indicating team and ec position
 	*/
-
-	function buildRadios($pref, $content) { ?>
-		<select name="<?= $pref; ?>team">
-		<option value="0">Test</option>
-		</select> <?PHP
-		/*
-		$teams = ["None", "Rush", "Social", "Philanthropy"];
-		$i = -1;
-		while ($i < 3) { ?>
-			<input type="radio" name="<?= $pref; ?>team" value="<?= $i; ?>" <?PHP
-			if ($i == $content["team"]) { ?>
-				checked <?PHP
-			} ?>
-			> <?= $teams[$i + 1]; ?> <?PHP
-			$i++;
+	function buildRadios($pref, $content) { 
+		$pages = ["Exec Council", "Rush Chairman", "Social Chairman",
+			"Philanthropy Chairman", "Rush Assistant", "Social Assistant",
+			"Philanthropy Assistant"]; 
+		$selected = 0;
+		if ($content["team"] == 0) {
+			if ($content["exec"] == 0) {
+				$selected = 4;
+			} else {
+				$selected = 1;
+			}
+		}
+		if ($content["team"] == 1) {
+			if ($content["exec"] == 0) {
+				$selected = 5;
+			} else {
+				$selected = 2;
+			}
+		}
+		if ($content["team"] == 2) {
+			if ($content["exec"] == 0) {
+				$selected = 6;
+			} else {
+				$selected = 3;
+			}
 		} ?>
-		<input type="checkbox" name="<?= $pref; ?>ec" <?PHP 
-			if ($content["exec"] == 1) { ?>
-				checked <?PHP
-			} ?>
-		>EC Member? <?PHP
-		*/
+		<select name="<?= $pref; ?>team"> <?PHP
+		for ($i = 0; $i < sizeof($pages); $i++) { 
+			if ($i == $selected) { ?>
+				<option value="<?= $i; ?>" selected><?= $pages[$i]; ?></option> <?PHP
+			} else { ?>
+				<option value="<?= $i; ?>"><?= $pages[$i]; ?></option> <?PHP
+			} 
+		} ?>
+		</select> <?PHP
 	}
 ?>

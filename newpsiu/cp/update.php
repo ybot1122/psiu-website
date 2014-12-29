@@ -76,15 +76,24 @@
 	}
 	
 	function addTeamMember() {
-		/*
-			
-		*/
 		$query = "INSERT INTO bioContent (team, exec, header, content, info)
 				VALUES (:tid, :exec, :hd, :cnt, :info)";
-		$input = getInputByPrefix("", ["team", "ec", "nickname", "hometown", "major", "phone",
+		$input = getInputByPrefix("", ["team", "nickname", "hometown", "major", "phone",
 				"email","header", "content"]);
-		$tid = $input["team"];
-		$ec = (isset($input["ec"])) ? 1 : 0;
+		// determine if exec council or not
+		$ec = 0;
+		if ($input["team"] == 0 || $input["team"] == 1 || $input["team"] == 2 || $input["team"] == 3) {
+			$ec = 1;
+		}
+		// determine appropriate team id
+		$tid = -1;
+		if ($input["team"] == 1 || $input["team"] == 4) {
+			$tid = 0;
+		} else if ($input["team"] == 2 || $input["team"] == 5) {
+			$tid = 1;
+		} else if ($input["team"] == 3 || $input["team"] == 6) {
+			$tid = 2;
+		}
 		$info = $input["nickname"]."::".$input["hometown"]."::".$input["major"].
 				"::".$input["phone"]."::".$input["email"];
 		$params = [
@@ -114,13 +123,24 @@
 						"phone", "email", "ec", "header", "content", "team"]);
 				$info = $input["nickname"]."::".$input["hometown"]."::".$input["major"]."::".
 						$input["phone"]."::".$input["email"];
-				$ec = ($input["ec"] != null) ? 1 : 0;
+				$ec = ($input["team"] == 0 || $input["team"] == 1 ||
+					$input["team"] == 2 || $input["team"] == 3) ? 1 : 0;
+				$team = - 1;
+				if ($input["team"] == 1 || $input["team"] == 4) {
+					$team = 0;
+				}
+				if ($input["team"] == 2 || $input["team"] == 5) {
+					$team = 1;
+				}
+				if ($input["team"] == 3 || $input["team"] == 6) {
+					$team = 2;
+				}
 				$params = [
 					":hd"	=>	$input["header"],
 					":cnt"	=>	$input["content"],
 					":info"	=>	$info,
 					":id"	=>	$curr["id"],
-					":team"	=>	$input["team"],
+					":team"	=>	$team,
 					":exec"	=>	$ec
 				];
 				dbPerform($query, $params);
