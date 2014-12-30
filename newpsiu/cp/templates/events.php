@@ -11,7 +11,7 @@
 		foreach($content as $panel) {
 			$date = date_parse($panel["date"]);
 			$id = $panel["id"]; ?>
-			<div>
+			<div class="row narrow">
 				<input type="text" class="team-header" 
 					name="<?= $id; ?>-title" value="<?= $panel["title"]; ?>" />
 				<textarea name="<?= $id; ?>-desc" class="team-header"><?= $panel["description"]; ?></textarea>
