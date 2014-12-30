@@ -17,7 +17,7 @@
 
 	// helper function that checks if a file was submitted and uploads it if it
 	// is valid for bio thumbnails
-	function uploadBioThumbnail($prefix, $id) {
+	function uploadBioThumbnail($prefix, $id, $add = false) {
 		$name = $prefix."img";
 		if (isset($_FILES[$name]) && $_FILES[$name]["error"] == 0) {
 			if (verifyFileType($name, ["image/png"])) {
@@ -29,10 +29,15 @@
 					}
 					move_uploaded_file($_FILES[$name]["tmp_name"],
 						"../layout/bio/".$id.".png");
-                    return;
+          appendMessage("Image successfully updated");
+          return;
 				}
 			}
+      appendMessage("Image failed to upload");
 		}
-		copy("../layout/bio/default.png", "../layout/bio/".$id.".png");
+    if ($add) {
+      appendMessage("Default icon used");
+      copy("../layout/bio/default.png", "../layout/bio/".$id.".png");
+    }
 	}
 ?>

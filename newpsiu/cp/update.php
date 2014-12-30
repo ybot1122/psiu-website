@@ -4,7 +4,9 @@
 	session_start();
 	include("../lib/lock.php");
 	include("../lib/db.php");
+  include("message.php");
 	include("upload.php");
+
 
 	if (!isset($_GET["edit"]) || !isset($_GET["page"])) {
 		header("Location: ../login.php");
@@ -17,28 +19,32 @@
 		// static content updating
 		if ($_GET["edit"] == "static") {
 			updateStaticContent($pid);
+      appendMessage("Content updated successfully");
 		}
 	} else if ($_GET["edit"] == "teams") {
 		// edit/remove existing team members
 		if ($_GET["page"] == "main") {
 			updateTeamMembers();
+      appendMessage("Member info updated successfully");
 		}
 		// add a new team member
 		if ($_GET["page"] == "add") {
 			addTeamMember();
+      appendMessage("New member added successfully.");
 		}
 	} else if ($_GET["edit"] == "gallery") {
 		// edit/remove existing photos
 		if ($_GET["page"] == "main") {
 			updatePhotoGallery();
+      appendMessage("Photo info updated successfully.");
 		}
 		// add a new photo
 		if ($_GET["page"] == "add") {
 			addPhoto();
 		}
 	}
-
-	header("Location: ../admin.php?edit=".$_GET["edit"]."&page=main");
+  
+	header("Location: ../admin.php?edit=".$_GET["edit"]."&page=".$_GET["page"]);
 
 	/*
 		returns an array of the POST form values associated with the provided id
@@ -105,7 +111,7 @@
 		];
 		dbPerform($query, $params);
 		$id = dbQuery("SELECT id FROM bioContent ORDER BY edited DESC LIMIT 1")["id"];
-		uploadBioThumbnail("", $id);
+		uploadBioThumbnail("", $id, true);
 	}
 
 	function updateTeamMembers() {
@@ -158,8 +164,13 @@
 				dbPerform($query, $params);
 				$id = dbQuery("SELECT id FROM galleryContent ORDER BY edited DESC LIMIT 1")[0];
 				move_uploaded_file($_FILES["img"]["tmp_name"], "../layout/gallery/".$id.".png");
-			}
-		}
+        appendMessage("Image uploaded successfully!");
+			} else {
+        appendMessage("Must be .png format"); 
+      }
+		} else {
+      appendMessage("All fields required."); 
+    }
 	}
 
 	function updatePhotoGallery() {

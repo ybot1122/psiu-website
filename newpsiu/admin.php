@@ -2,6 +2,7 @@
   include("lib/boilerplate.php");
   include("lib/lock.php");
   include("cp/parse.php");
+  include("cp/message.php");
   displayHeader("Admin Panel");
 ?>
 <link rel="stylesheet" href="css/admin.css">
@@ -48,6 +49,7 @@
   </div>
   <div class="col-md-9">
     <?= genTitle(); ?>
+    <?= displayMessage(); ?>
     <?= genForm(); ?>
   </div>
 </div>

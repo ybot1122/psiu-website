@@ -4,6 +4,7 @@
 	session_start();
 	include("../lib/lock.php");
 	include("../lib/db.php");
+  include("message.php");
 	include("cp_func.php");
 
 	if (!isset($_GET["action"])) {
@@ -19,8 +20,11 @@
 			$date = date("Y") . "-" . $_POST["month"] . "-" . $_POST["day"];
 			$query = "INSERT INTO events (title, description, date) VALUES (:ti, :dsc, :dte)";
 			$params = [":ti" => $_POST["title"], ":dsc" => $_POST["desc"], ":dte" => $date];
+      appendMessage("Event added successfully"); 
 			dbPerform($query, $params);
-		}
+		} else {
+      appendMessage("Invalid date, event not added"); 
+    }
 	} else if ($_GET["action"] == "update") {
 		// retrive all IDs of events from today onward
 		$ids = dbQuery("SELECT id FROM events WHERE date >= CURDATE()", [], true);
@@ -43,10 +47,15 @@
 						":id"	=>	$curr["id"]
 					];
 					dbPerform($updateQuery, $params);
-				}
+				} else {
+          appendMessage("Invalid date, event not updated"); 
+        }
 			}
 		}
-	}
+    appendMessage("Update successful"); 
+	} else {
+    appendMessage("All fields required"); 
+  }
 
 	header("Location: ../admin.php?edit=events&page=main");
 ?>

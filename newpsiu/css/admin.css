@@ -64,3 +64,15 @@ input[type="submit"]:hover {
 table, td, tr {
 	border: none;
 }
+
+#notify, #notification {
+  font-size: 14px;
+}
+
+#notify {
+  font-weight: bold;
+}
+
+#notification {
+  font-style: italic;
+}
