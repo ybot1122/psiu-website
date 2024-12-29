@@ -1,11 +1,7 @@
 # PsiU at UW Website
 ## PHP and SQL powered website with an admin panel for easy content control
 
-Here are just some examples of how I implement a website in PHP using a MySQL db for retrieving and storing content. The website records about 200-300 unique hits a month. From a fraternity standpoint, having a sightly and maintained website has proven effective in attracting potential members. The live website can be found at: http://www.students.washington.edu/psiu
-
-I have a demo of the current development available here: http://psiusitedemo.elasticbeanstalk.com/
-
-Please note master branch may not be most up to date. Check other branches for more recent pushes. 
+Here are just some examples of how I implement a website in PHP using a MySQL db for retrieving and storing content. The website records about 200-300 unique hits a month. From a fraternity standpoint, having a sightly and maintained website has proven effective in attracting potential members. 
 
 ### Admin Access
 The biggest feature is the simplified content editing system. In the past the website was served with static html webpages that had to be individually edited and reuploaded. The new website offers an admin portal, secured by a hardcoded user-id and password.
